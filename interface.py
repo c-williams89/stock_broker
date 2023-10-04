@@ -25,7 +25,20 @@ class MainMenu(Interface):
         '''Docstring'''
         new_cust = ("Create New Customer", None)
         find_cust = ("Find Customer", None)
-        super().__init__("Main Menu", [new_cust, find_cust])
+        exit_prgrm = ("Exit Program", exit)
+        super().__init__("Main Menu", [new_cust, find_cust, exit_prgrm])
 
-class CustDetailsMenu(Interface):
+class CustAcctDetailsMenu(Interface):
     '''Docstring'''
+    def __init__(self):
+        '''Docstring'''
+        self.create_cust_acct_details_menu()
+
+    def create_cust_acct_details_menu(self):
+        '''Docstring'''
+        select_acct = ("Select Account", None)
+        create_acct = ("Create Account", None)
+        back = ("Back to Main Menu", None)
+        exit_prgrm = ("Exit Program", exit)
+        super().__init__("Customer Account Options", [select_acct, create_acct, back, exit_prgrm])
+        
