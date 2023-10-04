@@ -15,3 +15,17 @@ class Interface:
         selection = int(input("=====> "))
         func = self._command_dict.get(selection, self._command_dict.get(0))[1]
         func()
+
+class MainMenu(Interface):
+    '''Docstring'''
+    def __init__(self):
+        self.create_main_menu()
+
+    def create_main_menu(self):
+        '''Docstring'''
+        new_cust = ("Create New Customer", None)
+        find_cust = ("Find Customer", None)
+        super().__init__("Main Menu", [new_cust, find_cust])
+
+class CustDetailsMenu(Interface):
+    '''Docstring'''
