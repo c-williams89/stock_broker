@@ -1,0 +1,12 @@
+# Format: Symbol, low, high, volatlity, initial price (optional)
+LIAM, 05, 95, 5
+TOMC, 10, 90, 5, 75
+JENG, 15, 85, 5
+JOEC, 20, 80, 5
+RYAN, 25, 75, 5
+JEFF, 30, 70, 5
+LOUM, 35, 65, 5
+FRNK, 40, 60, 5
+BRDN, 45, 55, 2, 55.00
+JOHN, 01, 99, 5, 55.55
+AKMG, 01, 99, 5, 90.09
