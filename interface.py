@@ -23,10 +23,18 @@ class MainMenu(Interface):
 
     def create_main_menu(self):
         '''Docstring'''
-        new_cust = ("Create New Customer", None)
-        find_cust = ("Find Customer", None)
+        new_cust = ("Create New Customer", self.get_cust_info)
+        find_cust = ("Find Customer", self.find_cust)
         exit_prgrm = ("Exit Program", exit)
         super().__init__("Main Menu", [new_cust, find_cust, exit_prgrm])
+
+    def get_cust_info(self):
+        name = input("Please enter customer name: ")
+        zip_code = input("Please enter customer zip code: ")
+        print("Successfully created new customer")
+
+    def find_cust(self):
+        pass
 
 class CustAcctDetailsMenu(Interface):
     '''Docstring'''
@@ -41,4 +49,12 @@ class CustAcctDetailsMenu(Interface):
         back = ("Back to Main Menu", None)
         exit_prgrm = ("Exit Program", exit)
         super().__init__("Customer Account Options", [select_acct, create_acct, back, exit_prgrm])
-        
+
+class AcctMenu(Interface):
+    '''Docstring'''
+    def __init__(self):
+        '''Docstring'''
+        self.create_acct_menu()
+
+    def create_acct_menu(self):
+        pass
