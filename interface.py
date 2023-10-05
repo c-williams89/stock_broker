@@ -1,12 +1,13 @@
 #!usr/bin/env python3
 
+from customer import Customer
+
 class Interface:
+    # TODO: Have base class hold all three menus so each menu can call super().'menu' to go back
     def __init__(self, menu_type, command_list):
         self._menu_type = menu_type
         self._command_dict = dict(enumerate(command_list, 1))
-
-    def help(self):
-        pass
+        # self._main_menu = None
         
     def display_menu(self):
         print(self._menu_type)
@@ -19,18 +20,17 @@ class Interface:
 class MainMenu(Interface):
     '''Docstring'''
     def __init__(self):
-        self.create_main_menu()
-
-    def create_main_menu(self):
-        '''Docstring'''
         new_cust = ("Create New Customer", self.get_cust_info)
         find_cust = ("Find Customer", self.find_cust)
         exit_prgrm = ("Exit Program", exit)
         super().__init__("Main Menu", [new_cust, find_cust, exit_prgrm])
 
     def get_cust_info(self):
-        name = input("Please enter customer name: ")
-        zip_code = input("Please enter customer zip code: ")
+        for i in range(4):
+            name = input("Please enter customer name: ")
+            zip_code = input("Please enter customer zip code: ")
+            customer = Customer(name, zip_code)
+            print(customer)
         print("Successfully created new customer")
 
     def find_cust(self):
