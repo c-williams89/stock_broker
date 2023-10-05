@@ -7,25 +7,20 @@ class Bank:
     acct_unique_id = 1111
     customer_unique_id = 1
     def __init__(self):
-        # TODO: Make the customer list a dictionary instead to get index and value quicker
-        # self._customer_list = []
         self._customer_list = {}
 
-    @property 
+    @property
     def customer_list(self):
         return self._customer_list
-    
+
     def add_customer(self, new_customer: Customer):
         self._customer_list.update({new_customer.id: new_customer})
-        # self._customer_list.append(new_customer)
 
-    
     def new_customer(self):
         for i in range(3):
             name = input("Please enter customer name: ")
             zip_code = input("Please enter customer zip code: ")
             customer = Customer(name, zip_code)
-            # self._customer_list.append(customer) re-write for dict
 
     def new_account(self, acct_holder: Customer):
         print(acct_holder)
@@ -42,9 +37,9 @@ class Bank:
             print(acct)
 
     def select_account(self, acct_holder: Customer):
-        selection = input("Please enter account number: ")
-        index = acct_holder._accts.index()
-
+        selection = int(input("Please enter account number: "))
+        acct = acct_holder.accts.get(selection)
+        print(acct)
 
     def __str__(self):
         for customer in self._customer_list:
