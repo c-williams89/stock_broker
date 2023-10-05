@@ -9,7 +9,8 @@ class Customer:
         self._id = self.unique_id
         self._zipcode = zipcode
         self._date_enrolled = datetime.date.today()
-        self._accts = []
+        # self._accts = []
+        self._accts = {}
         Customer.unique_id += 1
 
     @property
@@ -23,15 +24,11 @@ class Customer:
     @property
     def id(self):
         return self._id
-    
+
     @property
     def accts(self):
         return self._accts
-    
+
     def __str__(self):
         return f"Name:\t{self._name}\nID:\t{self._id}\n"\
                f"Date:\t{self._date_enrolled}\nAccounts:"
-            #    f"Date:\t{self._date_enrolled}\nAccounts: {(acct for acct in self._accts)}\n"
-            #    f"Date:\t{self._date_enrolled}\nAccounts: {''.join((acct) for acct in self._accts)}\n"
-        
-

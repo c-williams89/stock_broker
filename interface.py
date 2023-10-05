@@ -7,6 +7,8 @@ from bank import Bank
 class Interface:
     _curr_customer = None
     _bank = Bank()
+    _curr_acct = None
+
     def __init__(self, menu_type, command_list):
         self._menu_type = menu_type
         self._command_dict = dict(enumerate(command_list, 1))
@@ -67,15 +69,12 @@ class CustomerMenu(Interface):
         back = ("Back to Main Menu", self.back)
         exit_prgrm = ("Exit Program", exit)
         super().__init__("Customer Account Options", [select_acct, create_acct, back, exit_prgrm])
-    
+
     def get_curr(self):
         super()._bank.select_account(super().curr_customer)
-        print(f"Current customer: {Interface.curr_customer.name}")
-    
+
     def create_account(self):
         super()._bank.new_account(super().curr_customer)
-        # print(super().curr_customer)
-
 
 class AcctMenu(Interface):
     '''Docstring'''
