@@ -23,6 +23,11 @@ class Customer:
     @property
     def id(self):
         return self._id
+    
+    @property
+    def accts(self):
+        return self._accts
 
     def __str__(self):
-        return f"Name: {self._name}\nID: {self._id}\nDate: {self._date_enrolled}\nZip: {self._zipcode}"
+        return f"Name:\t{self._name}\nID:\t{self._id}\n"\
+               f"Date:\t{self._date_enrolled}\nAccounts:\n"
