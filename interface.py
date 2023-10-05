@@ -70,15 +70,13 @@ class CustomerMenu(Interface):
     
     def create_account(self):
         super()._bank.new_account(super().curr_customer)
-
+        print(Interface.curr_customer)
     def get_curr(self):
         print(f"Current customer: {Interface.curr_customer.name}")
+
 
 class AcctMenu(Interface):
     '''Docstring'''
     def __init__(self):
         '''Docstring'''
-        self.create_acct_menu()
-
-    def create_acct_menu(self):
         pass

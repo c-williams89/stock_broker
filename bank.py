@@ -11,7 +11,7 @@ class Bank:
     def customer_list(self):
         return self._customer_list
     
-    def add_customer(self, new_customer):
+    def add_customer(self, new_customer: Customer):
         self._customer_list.append(new_customer)
 
     
@@ -26,7 +26,10 @@ class Bank:
         print(acct_holder)
         acct_type = input("Please enter account type (regular or tax-free): ")
         balance = float(input("Please enter starting balance: "))
-        new_acct = Account(acct_holder.name, acct_holder.id, acct_type, balance)
+        new_acct = Account(acct_holder.name,
+                           acct_holder.id,
+                           acct_type,
+                           balance)
         acct_holder.accts.append(new_acct)
 
 
