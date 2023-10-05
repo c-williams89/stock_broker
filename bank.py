@@ -1,6 +1,7 @@
 #!usr/bin/env python3
 
 from customer import Customer
+from account import Account
 
 class Bank:
     def __init__(self):
@@ -20,6 +21,14 @@ class Bank:
             zip_code = input("Please enter customer zip code: ")
             customer = Customer(name, zip_code)
             self._customer_list.append(customer)
+
+    def new_account(self, acct_holder: Customer):
+        print(acct_holder)
+        acct_type = input("Please enter account type (regular or tax-free): ")
+        balance = float(input("Please enter starting balance: "))
+        new_acct = Account(acct_holder.name, acct_holder.id, acct_type, balance)
+        acct_holder.accts.append(new_acct)
+
 
     def __str__(self):
         for customer in self._customer_list:
