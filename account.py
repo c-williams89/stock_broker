@@ -11,6 +11,6 @@ class Account:
         Account.unique_id += 1
 
     def __str__(self):
-        return f"Account Type: {self._acct_type}\n"\
-               f"Account Number: {self._acct_number}\n"\
-               f"Balance: {self._balance}"
+        return f"\tAccount Type: {self._acct_type}\n"\
+               f"\tAccount Number: {self._acct_number}\n"\
+               f"\tBalance: {self._balance}\n"

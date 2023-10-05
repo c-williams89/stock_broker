@@ -31,7 +31,12 @@ class Bank:
                            acct_type,
                            balance)
         acct_holder.accts.append(new_acct)
+        print(acct_holder)
+        for acct in acct_holder.accts:
+            print(acct)
 
+    def select_account(self, acct_holder: Customer):
+        pass
 
     def __str__(self):
         for customer in self._customer_list:

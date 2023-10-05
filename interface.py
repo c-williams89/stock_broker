@@ -68,11 +68,13 @@ class CustomerMenu(Interface):
         exit_prgrm = ("Exit Program", exit)
         super().__init__("Customer Account Options", [select_acct, create_acct, back, exit_prgrm])
     
+    def get_curr(self):
+        super()._bank.select_account(super().curr_customer)
+        print(f"Current customer: {Interface.curr_customer.name}")
+    
     def create_account(self):
         super()._bank.new_account(super().curr_customer)
-        print(Interface.curr_customer)
-    def get_curr(self):
-        print(f"Current customer: {Interface.curr_customer.name}")
+        # print(super().curr_customer)
 
 
 class AcctMenu(Interface):
