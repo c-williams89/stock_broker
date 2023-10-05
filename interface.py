@@ -38,7 +38,6 @@ class Interface:
 class MainMenu(Interface):
     '''Docstring'''
     def __init__(self):
-        # self._bank = Bank()
         self._customer_menu = CustomerMenu()
         new_cust = ("Create New Customer", self.get_cust_info)
         find_cust = ("Find Customer", self.find_cust)
@@ -51,7 +50,6 @@ class MainMenu(Interface):
         zip_code = input("Please enter customer zip code: ")
         customer = Customer(name, zip_code)
         super()._bank.add_customer(customer)
-        # self._bank.add_customer(customer)
         os.system("clear")
         print(customer)
         Interface.curr_customer = customer
@@ -65,11 +63,14 @@ class CustomerMenu(Interface):
     def __init__(self):
         '''Docstring'''
         select_acct = ("Select Account", self.get_curr)
-        create_acct = ("Create Account", None)
+        create_acct = ("Create Account", self.create_account)
         back = ("Back to Main Menu", self.back)
         exit_prgrm = ("Exit Program", exit)
         super().__init__("Customer Account Options", [select_acct, create_acct, back, exit_prgrm])
     
+    def create_account(self):
+        super()._bank.new_account(super().curr_customer)
+
     def get_curr(self):
         print(f"Current customer: {Interface.curr_customer.name}")
 
