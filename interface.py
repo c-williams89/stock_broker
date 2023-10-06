@@ -9,6 +9,8 @@ class Interface:
     _bank = Bank()
     _curr_acct = None
 
+    back = ("Back to Main Menu", None)
+
     def __init__(self, menu_type, command_list):
         self._menu_type = menu_type
         self._command_dict = dict(enumerate(command_list, 1))
@@ -68,10 +70,15 @@ class CustomerMenu(Interface):
         create_acct = ("Create Account", self.create_account)
         back = ("Back to Main Menu", self.back)
         exit_prgrm = ("Exit Program", exit)
-        super().__init__("Customer Account Options", [select_acct, create_acct, back, exit_prgrm])
+        super().__init__("Customer Account Options", [select_acct,
+                                                      create_acct,
+                                                      back,
+                                                      exit_prgrm])
 
     def get_curr(self):
         super()._bank.select_account(super().curr_customer)
+        self._acct_menu = AcctMenu()
+        self._acct_menu.run()
 
     def create_account(self):
         super()._bank.new_account(super().curr_customer)
@@ -80,4 +87,16 @@ class AcctMenu(Interface):
     '''Docstring'''
     def __init__(self):
         '''Docstring'''
+        deposit = ("Deposit", None)
+        withdraw = ("Withdraw", None)
+        buy = ("Buy Stock", None)
+        sell = ("Sell Stock", None)
+        back = ("Back to Main Menu", None)
+        exit_prgrm = ("Exit Program", exit)
+        super().__init__("Account Options", [deposit,
+                                             withdraw,
+                                             buy,
+                                             sell,
+                                             back,
+                                             exit_prgrm])
         pass
