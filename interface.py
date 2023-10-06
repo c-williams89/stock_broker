@@ -5,7 +5,10 @@ from customer import Customer
 from bank import Bank
 
 class Interface:
-    # TODO: Have base class hold all three menus so each menu can call super().'menu' to go back
+    _curr_customer = None
+    _bank = Bank()
+    _curr_acct = None
+
     def __init__(self, menu_type, command_list):
         self._menu_type = menu_type
         self._command_dict = dict(enumerate(command_list, 1))
@@ -24,13 +27,19 @@ class Interface:
                 func()
 
     def back(self):
-        # os.system("clear")
         pass
+
+    @property
+    def curr_customer(self):
+        return self._curr_customer
+    
+    @curr_customer.setter
+    def curr_customer(self, new):
+        self._curr_customer = new
 
 class MainMenu(Interface):
     '''Docstring'''
     def __init__(self):
-        self._bank = Bank()
         self._customer_menu = CustomerMenu()
         new_cust = ("Create New Customer", self.get_cust_info)
         find_cust = ("Find Customer", self.find_cust)
@@ -42,9 +51,10 @@ class MainMenu(Interface):
         name = input("Please enter customer name: ")
         zip_code = input("Please enter customer zip code: ")
         customer = Customer(name, zip_code)
-        self._bank.add_customer(customer)
+        super()._bank.add_customer(customer)
         os.system("clear")
         print(customer)
+        Interface.curr_customer = customer
         self._customer_menu.run()
 
     def find_cust(self):
@@ -54,20 +64,20 @@ class CustomerMenu(Interface):
     '''Docstring'''
     def __init__(self):
         '''Docstring'''
-        select_acct = ("Select Account", None)
-        create_acct = ("Create Account", None)
+        select_acct = ("Select Account", self.get_curr)
+        create_acct = ("Create Account", self.create_account)
         back = ("Back to Main Menu", self.back)
         exit_prgrm = ("Exit Program", exit)
         super().__init__("Customer Account Options", [select_acct, create_acct, back, exit_prgrm])
 
-    # def back(self):
-    #     pass
+    def get_curr(self):
+        super()._bank.select_account(super().curr_customer)
+
+    def create_account(self):
+        super()._bank.new_account(super().curr_customer)
 
 class AcctMenu(Interface):
     '''Docstring'''
     def __init__(self):
         '''Docstring'''
-        self.create_acct_menu()
-
-    def create_acct_menu(self):
         pass
