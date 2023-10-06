@@ -40,6 +40,11 @@ class Bank:
         selection = int(input("Please enter account number: "))
         acct = acct_holder.accts.get(selection)
         print(acct)
+        return acct
+
+    def deposit(self, acct: Account, amt: float):
+        
+        pass
 
     def __str__(self):
         for customer in self._customer_list:

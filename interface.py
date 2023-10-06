@@ -8,6 +8,7 @@ class Interface:
     _curr_customer = None
     _bank = Bank()
     _curr_acct = None
+    # _main_menu = MainMenu()
 
     back = ("Back to Main Menu", None)
 
@@ -76,7 +77,7 @@ class CustomerMenu(Interface):
                                                       exit_prgrm])
 
     def get_curr(self):
-        super()._bank.select_account(super().curr_customer)
+        Interface._curr_acct = super()._bank.select_account(super().curr_customer)
         self._acct_menu = AcctMenu()
         self._acct_menu.run()
 
@@ -87,11 +88,11 @@ class AcctMenu(Interface):
     '''Docstring'''
     def __init__(self):
         '''Docstring'''
-        deposit = ("Deposit", None)
+        deposit = ("Deposit", self.acct_depost)
         withdraw = ("Withdraw", None)
         buy = ("Buy Stock", None)
         sell = ("Sell Stock", None)
-        back = ("Back to Main Menu", None)
+        back = ("Back to Main Menu", self.back)
         exit_prgrm = ("Exit Program", exit)
         super().__init__("Account Options", [deposit,
                                              withdraw,
@@ -99,4 +100,9 @@ class AcctMenu(Interface):
                                              sell,
                                              back,
                                              exit_prgrm])
-        pass
+        
+    def acct_depost(self):
+        amt = float(input("Please enter the amount to deposit: "))
+        super()._curr_acct.deposit(amt)
+        
+        
