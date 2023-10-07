@@ -9,7 +9,6 @@ class Customer:
         self._id = self.unique_id
         self._zipcode = zipcode
         self._date_enrolled = datetime.date.today()
-        # self._accts = []
         self._accts = {}
         Customer.unique_id += 1
 

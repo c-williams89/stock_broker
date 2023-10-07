@@ -8,6 +8,9 @@ class Interface:
     _curr_customer = None
     _bank = Bank()
     _curr_acct = None
+    # _main_menu = MainMenu()
+
+    back = ("Back to Main Menu", None)
 
     def __init__(self, menu_type, command_list):
         self._menu_type = menu_type
@@ -68,10 +71,15 @@ class CustomerMenu(Interface):
         create_acct = ("Create Account", self.create_account)
         back = ("Back to Main Menu", self.back)
         exit_prgrm = ("Exit Program", exit)
-        super().__init__("Customer Account Options", [select_acct, create_acct, back, exit_prgrm])
+        super().__init__("Customer Account Options", [select_acct,
+                                                      create_acct,
+                                                      back,
+                                                      exit_prgrm])
 
     def get_curr(self):
-        super()._bank.select_account(super().curr_customer)
+        Interface._curr_acct = super()._bank.select_account(super().curr_customer)
+        self._acct_menu = AcctMenu()
+        self._acct_menu.run()
 
     def create_account(self):
         super()._bank.new_account(super().curr_customer)
@@ -80,4 +88,23 @@ class AcctMenu(Interface):
     '''Docstring'''
     def __init__(self):
         '''Docstring'''
-        pass
+        deposit = ("Deposit", self.acct_depost)
+        withdraw = ("Withdraw", self.acct_withdraw)
+        buy = ("Buy Stock", None)
+        sell = ("Sell Stock", None)
+        back = ("Back to Main Menu", self.back)
+        exit_prgrm = ("Exit Program", exit)
+        super().__init__("Account Options", [deposit,
+                                             withdraw,
+                                             None,
+                                             None,
+                                             back,
+                                             exit_prgrm])
+        
+    def acct_depost(self):
+        amt = float(input("Please enter the amount to deposit: "))
+        super()._curr_acct.deposit(amt)
+        
+    def acct_withdraw(self):
+        amt = float(input("Please enter amount to withdraw: "))
+        super()._curr_acct.withdraw(amt)
