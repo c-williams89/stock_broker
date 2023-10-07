@@ -96,8 +96,8 @@ class AcctMenu(Interface):
         exit_prgrm = ("Exit Program", exit)
         super().__init__("Account Options", [deposit,
                                              withdraw,
-                                             buy,
-                                             sell,
+                                             None,
+                                             None,
                                              back,
                                              exit_prgrm])
         
