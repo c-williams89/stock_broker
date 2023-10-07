@@ -16,6 +16,9 @@ class Account:
     def deposit(self, amt: float):
         self._balance += amt
 
+    def withdraw(self, amt: float):
+        self._balance -= amt
+
     def __str__(self):
         return f"\tAccount Number: {self._acct_number}\n"\
                f"\tAccount Type: {self._acct_type}\n"\

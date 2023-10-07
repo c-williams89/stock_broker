@@ -89,7 +89,7 @@ class AcctMenu(Interface):
     def __init__(self):
         '''Docstring'''
         deposit = ("Deposit", self.acct_depost)
-        withdraw = ("Withdraw", None)
+        withdraw = ("Withdraw", self.acct_withdraw)
         buy = ("Buy Stock", None)
         sell = ("Sell Stock", None)
         back = ("Back to Main Menu", self.back)
@@ -105,4 +105,6 @@ class AcctMenu(Interface):
         amt = float(input("Please enter the amount to deposit: "))
         super()._curr_acct.deposit(amt)
         
-        
+    def acct_withdraw(self):
+        amt = float(input("Please enter amount to withdraw: "))
+        super()._curr_acct.withdraw(amt)
