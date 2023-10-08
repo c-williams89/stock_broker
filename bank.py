@@ -22,6 +22,16 @@ class Bank:
             zip_code = input("Please enter customer zip code: ")
             customer = Customer(name, zip_code)
 
+    def find_customer(self):
+        search = input("Please enter customer ID or name: ")
+        if (search.isdigit()):
+            current_customer = self._customer_list.get(int(search))
+            print(f"Name: {current_customer.name}")
+        else:
+            pass
+
+
+
     def new_account(self, acct_holder: Customer):
         print(acct_holder)
         acct_type = input("Please enter account type (regular or tax-free): ")

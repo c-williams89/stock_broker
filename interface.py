@@ -61,7 +61,8 @@ class MainMenu(Interface):
         self._customer_menu.run()
 
     def find_cust(self):
-        pass
+        super()._bank.find_customer()
+
 
 class CustomerMenu(Interface):
     '''Docstring'''
