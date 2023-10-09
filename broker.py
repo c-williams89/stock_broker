@@ -4,14 +4,12 @@ from random import gauss
 import json
 
 class Broker:
-    stock_list = []
     def __init__(self, ticker, name, start_price, std_dev, av_vol):
         self._ticker = ticker
         self._name = name
         self._start_price = start_price
         self._volatility : Tuple(float) = (av_vol, std_dev)
         self._price : List(float) = [start_price]
-        Broker.stock_list.append(self)
 
     @property
     def ticker(self):
@@ -35,4 +33,4 @@ class Broker:
         self._price.append(new_price)
 
     def __str__(self) -> str:
-        return f"Ticker: {self.ticker}\nCurrent Price: {self.price}"
+        return f"Ticker: {self.ticker}\tCurrent Price: {self.price}"

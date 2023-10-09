@@ -8,16 +8,18 @@ import json
 class Bank:
     acct_unique_id = 1111
     customer_unique_id = 1
+    _stock_list = {}
     def __init__(self):
         self._customer_list = {}
         with open('stock_data.json', 'r', encoding="utf-8") as stocks:
             stock_data = json.load(stocks)
 
         for ticker_symbol, data in stock_data.items():
-            Broker(ticker_symbol, data["Name"], data["Starting Share Price"],
+            stock = Broker(ticker_symbol, data["Name"], data["Starting Share Price"],
                    data["Standard Deviation (%)"], data["Average Daily Change (%)"])
-        # for stock in Broker.stock_list:
-        #     print(stock)
+            # Bank._stock_list.append(stock)
+            Bank._stock_list.update({stock.ticker: stock})
+
     @property
     def customer_list(self):
         return self._customer_list
@@ -62,8 +64,7 @@ class Bank:
                            balance)
         Bank.acct_unique_id += 1
         acct_holder.accts.update({new_acct.acct_number: new_acct})
-        for acct in acct_holder.accts.values():
-            print(acct)
+        return new_acct
 
     def select_account(self, acct_holder: Customer):
         selection = int(input("Please enter account number: "))
@@ -75,6 +76,17 @@ class Bank:
     def deposit(self, acct: Account, amt: float):
         pass
 
+    def buy_stock(self, acct: Account):
+        for stock in Bank._stock_list.values():
+            print(stock)
+        print("Please enter the symbol of stock to purchase.")
+        selection = input("====> ")
+        if (selection not in Bank._stock_list.keys()):
+            print("Invalid stock selection")
+        else:
+            print(f"How many shares of {selection} would you like to purchase?")
+            shares = input("=====> ")
+            
     def __str__(self):
         for customer in self._customer_list:
             return f"Name: {customer._name}\nId: {customer._id}"
