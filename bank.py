@@ -41,9 +41,6 @@ class Bank:
             print(f"{idx}: {cust.name}")
         selection = int(input("====> "))
         return cust_matches[selection]
-            
-
-
 
     def new_account(self, acct_holder: Customer):
         print(acct_holder)

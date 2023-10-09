@@ -8,7 +8,6 @@ class Interface:
     _curr_customer = None
     _bank = Bank()
     _curr_acct = None
-    # _main_menu = MainMenu()
 
     back = ("Back to Main Menu", None)
 
