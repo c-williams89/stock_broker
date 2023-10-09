@@ -30,4 +30,4 @@ class Customer:
 
     def __str__(self):
         return f"Name:\t{self._name}\nID:\t{self._id}\n"\
-               f"Date:\t{self._date_enrolled}\nAccounts:"
+               f"Date:\t{self._date_enrolled}\nAccounts:\n\t{self._accts}"
