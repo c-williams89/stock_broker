@@ -62,6 +62,7 @@ class MainMenu(Interface):
 
     def find_cust(self):
         super()._bank.find_customer()
+        self._customer_menu.run()
 
 
 class CustomerMenu(Interface):

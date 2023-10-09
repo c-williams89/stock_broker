@@ -24,18 +24,22 @@ class Bank:
 
     def find_customer(self):
         search = input("Please enter customer ID or name: ")
+        cust_matches = []
         if (search.isdigit()):
             curr_cust = self._customer_list.get(int(search))
             if (curr_cust is None):
                 print(f"Customer ID {search} not found")
+            return curr_cust
         else:
-            cust_matches = []
             for cust in self._customer_list.values():
                 if (cust.name.find(search) != -1):
-                    print("Found a mathc")
-                else:
-                    print("Not found")
-
+                    cust_matches.append(cust)
+            if len(cust_matches) == 1:
+                return cust_matches[0]
+        print("Please select one of the matching customers:")
+        for idx, cust in enumerate(cust_matches, 1):
+            print(f"{idx}: {cust.name}")
+        selection = input("====> ")
             
 
 
