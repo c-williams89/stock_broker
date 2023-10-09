@@ -8,6 +8,8 @@ class Account:
         self._acct_type = acct_type
         self._balance = balance
         self._acct_number = acct_number
+        self._holdings = []
+        self._transactions = []
 
     @property
     def acct_number(self):

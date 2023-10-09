@@ -2,13 +2,22 @@
 
 from customer import Customer
 from account import Account
+from broker import Broker
+import json
 
 class Bank:
     acct_unique_id = 1111
     customer_unique_id = 1
     def __init__(self):
         self._customer_list = {}
+        with open('stock_data.json', 'r', encoding="utf-8") as stocks:
+            stock_data = json.load(stocks)
 
+        for ticker_symbol, data in stock_data.items():
+            Broker(ticker_symbol, data["Name"], data["Starting Share Price"],
+                   data["Standard Deviation (%)"], data["Average Daily Change (%)"])
+        # for stock in Broker.stock_list:
+        #     print(stock)
     @property
     def customer_list(self):
         return self._customer_list

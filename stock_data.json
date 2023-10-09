@@ -1,0 +1,182 @@
+{
+    "MMM": {
+        "Average Daily Change (%)": 0.41,
+        "Standard Deviation (%)": 2.09,
+        "Starting Share Price": 2140.0,
+        "Name": "3M Company"
+    },
+    "AXP": {
+        "Average Daily Change (%)": 0.25,
+        "Standard Deviation (%)": 0.73,
+        "Starting Share Price": 780.0,
+        "Name": "American Express Company"
+    },
+    "AMGN": {
+        "Average Daily Change (%)": -1.47,
+        "Standard Deviation (%)": 0.74,
+        "Starting Share Price": 790.0,
+        "Name": "Amgen Inc."
+    },
+    "AAPL": {
+        "Average Daily Change (%)": -0.44,
+        "Standard Deviation (%)": 1.79,
+        "Starting Share Price": 1840.0,
+        "Name": "Apple Inc."
+    },
+    "BA": {
+        "Average Daily Change (%)": 1.47,
+        "Standard Deviation (%)": 1.89,
+        "Starting Share Price": 1940.0,
+        "Name": "The Boeing Company"
+    },
+    "CAT": {
+        "Average Daily Change (%)": 1.29,
+        "Standard Deviation (%)": 1.52,
+        "Starting Share Price": 1570.0,
+        "Name": "Caterpillar Inc."
+    },
+    "CVX": {
+        "Average Daily Change (%)": 0.16,
+        "Standard Deviation (%)": 0.72,
+        "Starting Share Price": 770.0,
+        "Name": "Chevron Corporation"
+    },
+    "CSCO": {
+        "Average Daily Change (%)": 0.72,
+        "Standard Deviation (%)": 1.44,
+        "Starting Share Price": 1490.0,
+        "Name": "Cisco Systems, Inc."
+    },
+    "KO": {
+        "Average Daily Change (%)": -1.09,
+        "Standard Deviation (%)": 1.06,
+        "Starting Share Price": 1110.0,
+        "Name": "The Coca-Cola Company"
+    },
+    "DOW": {
+        "Average Daily Change (%)": 0.24,
+        "Standard Deviation (%)": 0.8,
+        "Starting Share Price": 850.0,
+        "Name": "Dow Inc."
+    },
+    "GS": {
+        "Average Daily Change (%)": 1.3,
+        "Standard Deviation (%)": 1.26,
+        "Starting Share Price": 1310.0,
+        "Name": "The Goldman Sachs Group, Inc."
+    },
+    "HD": {
+        "Average Daily Change (%)": 0.7,
+        "Standard Deviation (%)": 1.96,
+        "Starting Share Price": 2010.0,
+        "Name": "The Home Depot, Inc."
+    },
+    "HON": {
+        "Average Daily Change (%)": 0.38,
+        "Standard Deviation (%)": 1.17,
+        "Starting Share Price": 1220.0,
+        "Name": "Honeywell International Inc."
+    },
+    "IBM": {
+        "Average Daily Change (%)": 0.78,
+        "Standard Deviation (%)": 0.71,
+        "Starting Share Price": 760.0,
+        "Name": "International Business Machines Corporation"
+    },
+    "INTC": {
+        "Average Daily Change (%)": 0.44,
+        "Standard Deviation (%)": 0.98,
+        "Starting Share Price": 1030.0,
+        "Name": "Intel Corporation"
+    },
+    "JNJ": {
+        "Average Daily Change (%)": 1.03,
+        "Standard Deviation (%)": 1.34,
+        "Starting Share Price": 1390.0,
+        "Name": "Johnson & Johnson"
+    },
+    "JPM": {
+        "Average Daily Change (%)": 0.77,
+        "Standard Deviation (%)": 1.7,
+        "Starting Share Price": 1750.0,
+        "Name": "JPMorgan Chase & Co."
+    },
+    "MCD": {
+        "Average Daily Change (%)": 1.42,
+        "Standard Deviation (%)": 2.14,
+        "Starting Share Price": 2190.0,
+        "Name": "McDonald's Corporation"
+    },
+    "MRK": {
+        "Average Daily Change (%)": 0.99,
+        "Standard Deviation (%)": 0.62,
+        "Starting Share Price": 670.0,
+        "Name": "Merck & Co., Inc."
+    },
+    "MSFT": {
+        "Average Daily Change (%)": 0.58,
+        "Standard Deviation (%)": 1.35,
+        "Starting Share Price": 1400.0,
+        "Name": "Microsoft Corporation"
+    },
+    "NKE": {
+        "Average Daily Change (%)": 1.2,
+        "Standard Deviation (%)": 1.07,
+        "Starting Share Price": 1120.0,
+        "Name": "NIKE, Inc."
+    },
+    "PG": {
+        "Average Daily Change (%)": -0.4,
+        "Standard Deviation (%)": 0.82,
+        "Starting Share Price": 870.0,
+        "Name": "The Procter & Gamble Company"
+    },
+    "CRM": {
+        "Average Daily Change (%)": 0.63,
+        "Standard Deviation (%)": 0.77,
+        "Starting Share Price": 820.0,
+        "Name": "Salesforce.com, inc."
+    },
+    "TRV": {
+        "Average Daily Change (%)": -0.53,
+        "Standard Deviation (%)": 1.2,
+        "Starting Share Price": 1250.0,
+        "Name": "The Travelers Companies, Inc."
+    },
+    "UNH": {
+        "Average Daily Change (%)": 0.05,
+        "Standard Deviation (%)": 1.57,
+        "Starting Share Price": 1620.0,
+        "Name": "UnitedHealth Group Incorporated"
+    },
+    "V": {
+        "Average Daily Change (%)": 0.01,
+        "Standard Deviation (%)": 0.94,
+        "Starting Share Price": 990.0,
+        "Name": "Visa Inc."
+    },
+    "WBA": {
+        "Average Daily Change (%)": -0.67,
+        "Standard Deviation (%)": 1.56,
+        "Starting Share Price": 1610.0,
+        "Name": "Walgreens Boots Alliance, Inc."
+    },
+    "WMT": {
+        "Average Daily Change (%)": 0.81,
+        "Standard Deviation (%)": 1.8,
+        "Starting Share Price": 1850.0,
+        "Name": "Walmart Inc."
+    },
+    "DIS": {
+        "Average Daily Change (%)": 0.28,
+        "Standard Deviation (%)": 2.3,
+        "Starting Share Price": 2350.0,
+        "Name": "The Walt Disney Company"
+    },
+    "VZ": {
+        "Average Daily Change (%)": 1.14,
+        "Standard Deviation (%)": 2.29,
+        "Starting Share Price": 2340.0,
+        "Name": "Verizon Communications Inc."
+    }
+}
