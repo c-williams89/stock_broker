@@ -57,17 +57,13 @@ class Bank:
             print(acct)
 
     def select_account(self, acct_holder: Customer):
-        acct = None
-        while (acct is None):
-            selection = int(input("Please enter account number: "))
-            acct = acct_holder.accts.get(selection)
-            if (acct is None):
-                print(f"Account {selection} does not exist")
-        print(acct)
+        selection = int(input("Please enter account number: "))
+        acct = acct_holder.accts.get(selection)
+        if (acct is None):
+            print(f"Account {selection} does not exist")
         return acct
 
     def deposit(self, acct: Account, amt: float):
-        
         pass
 
     def __str__(self):
