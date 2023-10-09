@@ -37,9 +37,10 @@ class Bank:
             if len(cust_matches) == 1:
                 return cust_matches[0]
         print("Please select one of the matching customers:")
-        for idx, cust in enumerate(cust_matches, 1):
+        for idx, cust in enumerate(cust_matches):
             print(f"{idx}: {cust.name}")
-        selection = input("====> ")
+        selection = int(input("====> "))
+        return cust_matches[selection]
             
 
 
@@ -59,8 +60,12 @@ class Bank:
             print(acct)
 
     def select_account(self, acct_holder: Customer):
-        selection = int(input("Please enter account number: "))
-        acct = acct_holder.accts.get(selection)
+        acct = None
+        while (acct is None):
+            selection = int(input("Please enter account number: "))
+            acct = acct_holder.accts.get(selection)
+            if (acct is None):
+                print(f"Account {selection} does not exist")
         print(acct)
         return acct
 
