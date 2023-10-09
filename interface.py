@@ -8,7 +8,6 @@ class Interface:
     _curr_customer = None
     _bank = Bank()
     _curr_acct = None
-    # _main_menu = MainMenu()
 
     back = ("Back to Main Menu", None)
 
@@ -61,7 +60,9 @@ class MainMenu(Interface):
         self._customer_menu.run()
 
     def find_cust(self):
-        pass
+        Interface.curr_customer = super()._bank.find_customer()
+        self._customer_menu.run()
+
 
 class CustomerMenu(Interface):
     '''Docstring'''
@@ -96,8 +97,8 @@ class AcctMenu(Interface):
         exit_prgrm = ("Exit Program", exit)
         super().__init__("Account Options", [deposit,
                                              withdraw,
-                                             None,
-                                             None,
+                                             buy,
+                                             sell,
                                              back,
                                              exit_prgrm])
         

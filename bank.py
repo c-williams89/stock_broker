@@ -22,6 +22,26 @@ class Bank:
             zip_code = input("Please enter customer zip code: ")
             customer = Customer(name, zip_code)
 
+    def find_customer(self):
+        search = input("Please enter customer ID or name: ")
+        cust_matches = []
+        if (search.isdigit()):
+            curr_cust = self._customer_list.get(int(search))
+            if (curr_cust is None):
+                print(f"Customer ID {search} not found")
+            return curr_cust
+        else:
+            for cust in self._customer_list.values():
+                if (cust.name.find(search) != -1):
+                    cust_matches.append(cust)
+            if len(cust_matches) == 1:
+                return cust_matches[0]
+        print("Please select one of the matching customers:")
+        for idx, cust in enumerate(cust_matches):
+            print(f"{idx}: {cust.name}")
+        selection = int(input("====> "))
+        return cust_matches[selection]
+
     def new_account(self, acct_holder: Customer):
         print(acct_holder)
         acct_type = input("Please enter account type (regular or tax-free): ")
@@ -37,8 +57,12 @@ class Bank:
             print(acct)
 
     def select_account(self, acct_holder: Customer):
-        selection = int(input("Please enter account number: "))
-        acct = acct_holder.accts.get(selection)
+        acct = None
+        while (acct is None):
+            selection = int(input("Please enter account number: "))
+            acct = acct_holder.accts.get(selection)
+            if (acct is None):
+                print(f"Account {selection} does not exist")
         print(acct)
         return acct
 
