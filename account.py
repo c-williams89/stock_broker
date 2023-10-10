@@ -50,14 +50,15 @@ class Account:
     def show_holdings(self):
         print("\tHoldings:")
         if len(self._holdings) == 0:
-            print("\tNo Holdings")
+            print("\t\tNo Current Holdings")
         for holding in self._holdings.values():
+            holding.stock.increment_price()
             print(holding)
 
     def show_transactions(self):
         print("\tTransactions:")
         if len(self.transactions) == 0:
-            print("\tNo transaction history")
+            print("\t\tNo transaction history")
         for transaction in self._transactions:
             print(transaction)
 
