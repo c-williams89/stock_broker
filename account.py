@@ -54,10 +54,7 @@ class Account:
         for holding in self._holdings.values():
             print(f"\t\t{holding.stock}\n"
                   f"\t\tShares: {holding.shares}\n"
-                  f"\t\tPurchase Price: {holding.purchase_price}\n")
-            # print(f"\t\t{holding[0]}\n"
-            #       f"\t\tShares: {holding[1]}\n"\
-            #       f"\t\tPurchase Price: {holding[2]}\n")
+                  f"\t\tPurchase Price: ${holding.purchase_price:.2f}/share\n")
 
     def show_transactions(self):
         print("\tTransactions:")
@@ -69,7 +66,7 @@ class Account:
     def __str__(self):
         return f"\tAccount Number: {self._acct_number}\n"\
                f"\tAccount Type: {self._acct_type}\n"\
-               f"\tBalance: {self._balance}\n"
+               f"\tBalance: ${self._balance:.2f}\n"
 
 class Holding:
     def __init__(self, stock, shares, purchase_price) -> None:
@@ -94,3 +91,5 @@ class Holding:
 
     def buy_shares(self, to_buy):
         self._shares += to_buy
+
+# class Transaction:

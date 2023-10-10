@@ -117,6 +117,12 @@ class Bank:
                 holding.sell_shares(to_sell)
                 revenue = holding.stock.price * to_sell
                 acct.deposit(revenue)
+                transaction = (datetime.datetime.now(),
+                               "Sell",
+                               revenue)
+                acct.transactions.append(transaction)
+                if holding.shares == 0:
+                    acct.holdings.pop(holding.stock.ticker)
 
     def __str__(self):
         for customer in self._customer_list:
