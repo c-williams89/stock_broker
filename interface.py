@@ -27,14 +27,25 @@ class Interface:
                     details.show_transactions()
             for option in self._command_dict.items():
                 print(f"{option[0]}: {option[1][0]}")
-            selection = int(input("=====> "))
-            os.system("clear")
-            func = self._command_dict.get(selection, self._command_dict.get(0))[1]
-            if func.__name__ == "back":
-                os.system("clear")
-                break
+            try:
+                selection = int(input("=====> "))
+            except ValueError:
+                print("Invalid option selected")
             else:
-                func()
+                func = self._command_dict.get(selection, None)
+                if func is None:
+                    print("Invalid Menu Option")
+                else:
+                    func[1]()
+                # func = self._command_dict.get(selection, self._command_dict.get(0))[1]
+            # selection = int(input("=====> "))
+            # os.system("clear")
+            # func = self._command_dict.get(selection, self._command_dict.get(0))[1]
+            # if func.__name__ == "back":
+            #     os.system("clear")
+            #     break
+            # else:
+            #     func()
 
     def back(self):
         pass
