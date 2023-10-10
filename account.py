@@ -87,6 +87,7 @@ class Account:
                f"\tAccount Type: {self._acct_type}\n"\
                f"\tBalance: ${self._balance:.2f}\n"
 
+
 class Holding:
     def __init__(self, stock, shares, purchase_price) -> None:
         self._stock = stock
@@ -96,15 +97,15 @@ class Holding:
     @property
     def stock(self):
         return self._stock
-    
+
     @property
     def shares(self):
         return self._shares
-    
+
     @property
     def purchase_price(self):
         return self._purchase_price
-    
+
     def sell_shares(self, to_sell):
         self._shares -= to_sell
 
@@ -115,7 +116,7 @@ class Holding:
         return f"\t\tStock: {self.stock}\n"\
                f"\t\tShares: {self.shares}\n"\
                f"\t\tPurchase Price: ${self.purchase_price:.2f}/share\n"
-    
+
 
 class Transaction:
     def __init__(self, timestamp, tran_type, price):
@@ -126,15 +127,15 @@ class Transaction:
     @property
     def timestamp(self):
         return self._timestamp
-    
+
     @property
     def tran_type(self):
         return self._tran_type
-    
+
     @property
     def price(self):
         return self._price
-    
+
     def __str__(self):
         return f"\t\tTimestamp:\t{self.timestamp}\n"\
                f"\t\tTransaction:\t{self.tran_type}\n"\
