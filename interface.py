@@ -121,8 +121,6 @@ class AcctMenu(Interface):
 
     def acct_depost(self):
         super()._curr_acct.deposit()
-        # amt = float(input("Please enter the amount to deposit: "))
-        # super()._curr_acct.deposit(amt)
 
     def acct_withdraw(self):
         super()._curr_acct.withdraw()

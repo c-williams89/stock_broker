@@ -115,12 +115,19 @@ class Bank:
         else:
             stock = Bank._stock_list.get(selection)
             print(f"How many shares of {stock.name} would you like to purchase?")
-            shares = int(input("=====> "))
+            shares = 0
+            while shares < 1:
+                try:
+                    shares = int(input("=====> "))
+                    if shares < 1:
+                        print("Stock purchases must be in positive integers.")
+                except ValueError:
+                    print("Stock purchases must be in whole numbers.")
             purchase_price = shares * stock.price
             if acct._balance < purchase_price:
                 print("Insufficient funds")
             else:
-                acct.withdraw(purchase_price)
+                acct.balance = -purchase_price
                 dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 transaction = Transaction(dt,
                                           "Purchase",
@@ -139,13 +146,22 @@ class Bank:
             print("Not found")
         else:
             print("How many shares would you like to sell?")
-            to_sell = int(input("=====> "))
-            if to_sell > holding.shares:
-                print("Too many shares")
+            shares = 0
+            while shares < 1:
+                try:
+                    shares = int(input("=====> "))
+                    if shares < 1:
+                        print("Stock sales must be in positive integers")
+                except ValueError:
+                    print("Stock sales must be in whole numbers.")
+    
+            if shares > holding.shares:
+                print("Too many shares.")
             else:
-                holding.sell_shares(to_sell)
-                revenue = holding.stock.price * to_sell
-                acct.deposit(revenue)
+                holding.sell_shares(shares)
+                revenue = holding.stock.price * shares
+                acct.balance = revenue
+                # acct.deposit(revenue)
                 dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 transaction = Transaction(dt,
                                           "Sell",

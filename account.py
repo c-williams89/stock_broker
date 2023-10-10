@@ -41,6 +41,10 @@ class Account:
     def transactions(self):
         return self._transactions
 
+    @balance.setter
+    def balance(self, new):
+        self._balance += new
+
     def deposit(self):
         amt = self.get_amt("deposit")
         self._balance += amt
