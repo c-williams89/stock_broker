@@ -4,7 +4,7 @@ import json
 import datetime
 import os
 from customer import Customer
-from account import Account, Holding
+from account import Account, Holding, Transaction
 from broker import Broker
 
 class Bank:
@@ -80,6 +80,7 @@ class Bank:
     def buy_stock(self, acct: Account):
         for stock in Bank._stock_list.values():
             print(stock)
+        print(f"Current Account Balance: ${acct.balance:.2f}")
         print("Please enter the symbol of stock to purchase.")
         selection = input("====> ")
         if (selection not in Bank._stock_list.keys()):
@@ -93,9 +94,9 @@ class Bank:
                 print("Insufficient funds")
             else:
                 acct.withdraw(purchase_price)
-                transaction = (datetime.datetime.now(),
-                               "Purchase",
-                               purchase_price)
+                transaction = Transaction(datetime.datetime.now(),
+                                          "Purchase",
+                                          purchase_price)
                 acct._transactions.append(transaction)
                 holding = Holding(stock, shares, stock.price)
                 acct.holdings.update({selection : holding})
@@ -117,9 +118,9 @@ class Bank:
                 holding.sell_shares(to_sell)
                 revenue = holding.stock.price * to_sell
                 acct.deposit(revenue)
-                transaction = (datetime.datetime.now(),
-                               "Sell",
-                               revenue)
+                transaction = Transaction(datetime.datetime.now(),
+                                          "Sell",
+                                          revenue)
                 acct.transactions.append(transaction)
                 if holding.shares == 0:
                     acct.holdings.pop(holding.stock.ticker)

@@ -39,5 +39,6 @@ class Customer:
                   f"\tBalance:\t{acct.balance}\n")
 
     def __str__(self):
-        return f"Name:\t{self._name}\nID:\t{self._id}\n"\
+        return f"Name:\t\t{self._name}\n"\
+               f"Customer ID:\t{self._id}\n"\
                f"Date Enrolled:\t{self._date_enrolled}\nAccounts:\n"
