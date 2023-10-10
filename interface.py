@@ -20,6 +20,11 @@ class Interface:
             print(f"{self._menu_type} Menu")
             if self._menu_type != "Main":
                 print(f"{self._menu_type} Details:\n{details}")
+                if self._menu_type == "Customer":
+                    details.show_accounts()
+                else:
+                    details.show_holdings()
+                    details.show_transactions()
             for option in self._command_dict.items():
                 print(f"{option[0]}: {option[1][0]}")
             selection = int(input("=====> "))

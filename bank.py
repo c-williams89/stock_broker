@@ -93,7 +93,9 @@ class Bank:
                 print("Insufficient funds")
             else:
                 acct.withdraw(purchase_price)
-                transaction = (datetime.date.today(), "Purchase", purchase_price)
+                transaction = (datetime.datetime.now(),
+                               "Purchase",
+                               purchase_price)
                 acct._transactions.append(transaction)
                 holding = (stock, shares, purchase_price)
                 acct._holdings.append(holding)
