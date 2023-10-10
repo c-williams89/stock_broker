@@ -72,6 +72,7 @@ class Bank:
         print(acct_holder)
         acct_type = input("Please enter account type (regular or tax-free): ")
         balance = -1
+        # TODO: Turn this into get_value function to be used with withdraw/deposit
         while balance < 0:
             try:
                 balance = float(input("Please enter starting balance: "))

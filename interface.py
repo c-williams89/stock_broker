@@ -120,12 +120,12 @@ class AcctMenu(Interface):
                                      exit_prgrm])
 
     def acct_depost(self):
-        amt = float(input("Please enter the amount to deposit: "))
-        super()._curr_acct.deposit(amt)
+        super()._curr_acct.deposit()
+        # amt = float(input("Please enter the amount to deposit: "))
+        # super()._curr_acct.deposit(amt)
 
     def acct_withdraw(self):
-        amt = float(input("Please enter amount to withdraw: "))
-        super()._curr_acct.withdraw(amt)
+        super()._curr_acct.withdraw()
 
     def stock_buy(self):
         super()._bank.buy_stock(super()._curr_acct)

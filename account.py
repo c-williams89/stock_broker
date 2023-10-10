@@ -41,11 +41,27 @@ class Account:
     def transactions(self):
         return self._transactions
 
-    def deposit(self, amt: float):
+    def deposit(self):
+        amt = self.get_amt("deposit")
         self._balance += amt
 
-    def withdraw(self, amt: float):
-        self._balance -= amt
+    def withdraw(self):
+        amt = self.get_amt("withdraw")
+        if amt > self.balance:
+            print("Sorry, you do not have over-draft protection.")
+        else:
+            self._balance -= amt
+
+    def get_amt(self, tran_type):
+        amt = -1
+        while amt < 0:
+            try:
+                amt = float(input(f"Please enter amount to {tran_type}. "))
+                if amt < 0:
+                    print(f"Value to {tran_type} must be non-negative.")
+            except ValueError:
+                print("Balance must be monetary value (xxx.xx)")
+        return amt
 
     def show_holdings(self):
         print("\tHoldings:")
