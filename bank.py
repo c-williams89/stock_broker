@@ -7,18 +7,23 @@ from customer import Customer
 from account import Account, Holding, Transaction
 from broker import Stock
 
+
 class Bank:
     acct_unique_id = 1111
     customer_unique_id = 1
     _stock_list = {}
+
     def __init__(self):
         self._customer_list = {}
         with open('stock_data.json', 'r', encoding="utf-8") as stocks:
             stock_data = json.load(stocks)
 
         for ticker_symbol, data in stock_data.items():
-            stock = Stock(ticker_symbol, data["Name"], data["Starting Share Price"],
-                   data["Standard Deviation (%)"], data["Average Daily Change (%)"])
+            stock = Stock(ticker_symbol,
+                          data["Name"],
+                          data["Starting Share Price"],
+                          data["Standard Deviation (%)"],
+                          data["Average Daily Change (%)"])
             Bank._stock_list.update({stock.ticker: stock})
 
     @property
@@ -72,7 +77,6 @@ class Bank:
         print(acct_holder)
         acct_type = input("Please enter account type (regular or tax-free): ")
         balance = -1
-        # TODO: Turn this into get_value function to be used with withdraw/deposit
         while balance < 0:
             try:
                 balance = float(input("Please enter starting balance: "))
@@ -114,7 +118,8 @@ class Bank:
             print("Invalid stock selection")
         else:
             stock = Bank._stock_list.get(selection)
-            print(f"How many shares of {stock.name} would you like to purchase?")
+            print(f"How many shares of {stock.name} "
+                  f"would you like to purchase?")
             shares = 0
             while shares < 1:
                 try:
@@ -134,7 +139,7 @@ class Bank:
                                           purchase_price)
                 acct._transactions.append(transaction)
                 holding = Holding(stock, shares, stock.price)
-                acct.holdings.update({selection : holding})
+                acct.holdings.update({selection: holding})
 
     def sell_stock(self, acct: Account):
         os.system("clear")
@@ -154,7 +159,7 @@ class Bank:
                         print("Stock sales must be in positive integers")
                 except ValueError:
                     print("Stock sales must be in whole numbers.")
-    
+
             if shares > holding.shares:
                 print("Too many shares.")
             else:
