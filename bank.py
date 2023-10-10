@@ -94,11 +94,9 @@ class Bank:
             else:
                 acct.withdraw(purchase_price)
                 transaction = (datetime.date.today(), "Purchase", purchase_price)
+                acct._transactions.append(transaction)
                 holding = (stock, shares, purchase_price)
                 acct._holdings.append(holding)
-                acct._transactions.append(transaction)
-        for transaction in acct._transactions:
-            print(f"Time: {transaction[0]}\nType: {transaction[1]}\nPrice: {transaction[2]}")
 
     def __str__(self):
         for customer in self._customer_list:

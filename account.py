@@ -21,7 +21,14 @@ class Account:
     def withdraw(self, amt: float):
         self._balance -= amt
 
+    def show_holdings(self):
+        for holding in self._holdings:
+            print(f"\t{holding[0]}\n"
+                  f"\tShares: {holding[1]}\n"\
+                  f"\tPurchase Price: {holding[2]}")
+
     def __str__(self):
         return f"\tAccount Number: {self._acct_number}\n"\
                f"\tAccount Type: {self._acct_type}\n"\
-               f"\tBalance: {self._balance}\n"
+               f"\tBalance: {self._balance}\n\n"\
+               f"\tHoldings:\n{self.show_holdings()}"
