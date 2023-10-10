@@ -1,10 +1,11 @@
 #!usr/bin/env python3
 
-from customer import Customer
-from account import Account
-from broker import Broker
 import json
 import datetime
+import os
+from customer import Customer
+from account import Account, Holding
+from broker import Broker
 
 class Bank:
     acct_unique_id = 1111
@@ -54,7 +55,6 @@ class Bank:
         return cust_matches[selection]
 
     def new_account(self, acct_holder: Customer):
-        # acct_holder.print_cust()
         print(acct_holder)
         acct_type = input("Please enter account type (regular or tax-free): ")
         balance = float(input("Please enter starting balance: "))
@@ -70,7 +70,7 @@ class Bank:
     def select_account(self, acct_holder: Customer):
         selection = int(input("Please enter account number: "))
         acct = acct_holder.accts.get(selection)
-        if (acct is None):
+        if acct is None:
             print(f"Account {selection} does not exist")
         return acct
 
@@ -89,7 +89,7 @@ class Bank:
             print(f"How many shares of {stock.name} would you like to purchase?")
             shares = int(input("=====> "))
             purchase_price = shares * stock.price
-            if (acct._balance < purchase_price):
+            if acct._balance < purchase_price:
                 print("Insufficient funds")
             else:
                 acct.withdraw(purchase_price)
@@ -97,8 +97,32 @@ class Bank:
                                "Purchase",
                                purchase_price)
                 acct._transactions.append(transaction)
-                holding = (stock, shares, purchase_price)
-                acct._holdings.append(holding)
+                holding = Holding(stock, shares, stock.price)
+                acct.holdings.update({selection : holding})
+
+    def sell_stock(self, acct: Account):
+        os.system("clear")
+        acct.show_holdings()
+        print("Please enter symbol of stock to sell.")
+        selection = input("=====> ")
+        holding = acct.holdings.get(selection)
+        if holding is None:
+            print("Not found")
+        else:
+            print("How many shares would you like to sell?")
+            to_sell = int(input("=====> "))
+            if to_sell > holding.shares:
+                print("Too many shares")
+            else:
+                holding.sell_shares(to_sell)
+                revenue = holding.stock.price * to_sell
+                acct.deposit(revenue)
+                transaction = (datetime.datetime.now(),
+                               "Sell",
+                               revenue)
+                acct.transactions.append(transaction)
+                if holding.shares == 0:
+                    acct.holdings.pop(holding.stock.ticker)
 
     def __str__(self):
         for customer in self._customer_list:

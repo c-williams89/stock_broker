@@ -5,5 +5,5 @@ from bank import Bank
 
 if __name__ == "__main__":
     main_menu = MainMenu()
-    bank = Bank()
+    # bank = Bank()
     main_menu.run(None)
