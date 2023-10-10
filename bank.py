@@ -29,12 +29,17 @@ class Bank:
         self._customer_list.update({new_customer.id: new_customer})
 
     def new_customer(self):
-        for i in range(3):
-            name = input("Please enter customer name: ")
-            zip_code = input("Please enter customer zip code: ")
+        name = input("Please enter customer name: ")
+        try:
+            zip_code = int(input("Please enter customer zip code: "))
+        except ValueError:
+            print("Invalid zip code")
+            return None
+        else:
             customer = Customer(name, zip_code)
+        return customer
 
-    def find_customer(self):
+    def find_customer(self) -> Customer or None:
         search = input("Please enter customer ID or name: ")
         cust_matches = []
         if (search.isdigit()):
@@ -45,19 +50,36 @@ class Bank:
         else:
             for cust in self._customer_list.values():
                 if (cust.name.find(search) != -1):
+                    print("Found a match")
                     cust_matches.append(cust)
+            if len(cust_matches) == 0:
+                print(f"No matches found for '{search}'")
+                return None
             if len(cust_matches) == 1:
                 return cust_matches[0]
         print("Please select one of the matching customers:")
         for idx, cust in enumerate(cust_matches):
             print(f"{idx}: {cust.name}")
-        selection = int(input("====> "))
+        selection = -1
+        while selection not in range(len(cust_matches)):
+            try:
+                selection = int(input("=====> "))
+            except ValueError:
+                print("Invalid option")
         return cust_matches[selection]
 
     def new_account(self, acct_holder: Customer):
         print(acct_holder)
         acct_type = input("Please enter account type (regular or tax-free): ")
-        balance = float(input("Please enter starting balance: "))
+        balance = -1
+        # TODO: Turn this into get_value function to be used with withdraw/deposit
+        while balance < 0:
+            try:
+                balance = float(input("Please enter starting balance: "))
+                if balance < 0:
+                    print("Starting balance must be a non-negative value.")
+            except ValueError:
+                print("Balance must be monetary value (xxx.xx)")
         new_acct = Account(acct_holder.name,
                            acct_holder.id,
                            acct_type,
@@ -68,7 +90,11 @@ class Bank:
         return new_acct
 
     def select_account(self, acct_holder: Customer):
-        selection = int(input("Please enter account number: "))
+        try:
+            selection = int(input("Please enter account number: "))
+        except ValueError:
+            print("Account ID must be a number")
+            return None
         acct = acct_holder.accts.get(selection)
         if acct is None:
             print(f"Account {selection} does not exist")
@@ -89,13 +115,21 @@ class Bank:
         else:
             stock = Bank._stock_list.get(selection)
             print(f"How many shares of {stock.name} would you like to purchase?")
-            shares = int(input("=====> "))
+            shares = 0
+            while shares < 1:
+                try:
+                    shares = int(input("=====> "))
+                    if shares < 1:
+                        print("Stock purchases must be in positive integers.")
+                except ValueError:
+                    print("Stock purchases must be in whole numbers.")
             purchase_price = shares * stock.price
             if acct._balance < purchase_price:
                 print("Insufficient funds")
             else:
-                acct.withdraw(purchase_price)
-                transaction = Transaction(datetime.datetime.now(),
+                acct.balance = -purchase_price
+                dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                transaction = Transaction(dt,
                                           "Purchase",
                                           purchase_price)
                 acct._transactions.append(transaction)
@@ -112,14 +146,24 @@ class Bank:
             print("Not found")
         else:
             print("How many shares would you like to sell?")
-            to_sell = int(input("=====> "))
-            if to_sell > holding.shares:
-                print("Too many shares")
+            shares = 0
+            while shares < 1:
+                try:
+                    shares = int(input("=====> "))
+                    if shares < 1:
+                        print("Stock sales must be in positive integers")
+                except ValueError:
+                    print("Stock sales must be in whole numbers.")
+    
+            if shares > holding.shares:
+                print("Too many shares.")
             else:
-                holding.sell_shares(to_sell)
-                revenue = holding.stock.price * to_sell
-                acct.deposit(revenue)
-                transaction = Transaction(datetime.datetime.now(),
+                holding.sell_shares(shares)
+                revenue = holding.stock.price * shares
+                acct.balance = revenue
+                # acct.deposit(revenue)
+                dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                transaction = Transaction(dt,
                                           "Sell",
                                           revenue)
                 acct.transactions.append(transaction)

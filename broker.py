@@ -22,7 +22,6 @@ class Stock:
     
     @property
     def price(self):
-        # self.increment_price()
         return self._price[-1]
     
     @property

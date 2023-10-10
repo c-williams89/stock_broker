@@ -9,8 +9,6 @@ class Interface:
     _bank = Bank()
     _curr_acct = None
 
-    back = ("Back to Main Menu", None)
-
     def __init__(self, menu_type, command_list):
         self._menu_type = menu_type
         self._command_dict = dict(enumerate(command_list, 1))
@@ -27,17 +25,26 @@ class Interface:
                     details.show_transactions()
             for option in self._command_dict.items():
                 print(f"{option[0]}: {option[1][0]}")
-            selection = int(input("=====> "))
-            os.system("clear")
-            func = self._command_dict.get(selection, self._command_dict.get(0))[1]
-            if func.__name__ == "back":
-                os.system("clear")
-                break
+            try:
+                selection = int(input("=====> "))
+            except ValueError:
+                print("Invalid option selected")
             else:
-                func()
+                os.system("clear")
+                func = self._command_dict.get(selection, None)
+                if func is None:
+                    print("Invalid Menu Option")
+                elif func[1].__name__ == "back":
+                    os.system("clear")
+                    break
+                else:
+                    func[1]()
 
     def back(self):
         pass
+
+    def quit_prgrm(self):
+        exit()
 
     @property
     def curr_customer(self):
@@ -53,44 +60,45 @@ class MainMenu(Interface):
         self._customer_menu = CustomerMenu()
         new_cust = ("Create New Customer", self.get_cust_info)
         find_cust = ("Find Customer", self.find_cust)
-        exit_prgrm = ("Exit Program", exit)
+        exit_prgrm = ("Exit Program", self.quit_prgrm)
         super().__init__("Main", [new_cust, find_cust, exit_prgrm])
 
     def get_cust_info(self):
         '''Docstring'''
-        name = input("Please enter customer name: ")
-        zip_code = input("Please enter customer zip code: ")
-        customer = Customer(name, zip_code)
-        super()._bank.add_customer(customer)
-        os.system("clear")
-        Interface.curr_customer = customer
-        self._customer_menu.run(Interface.curr_customer)
+        customer = super()._bank.new_customer()
+        if customer != None:
+            super()._bank.add_customer(customer)
+            os.system("clear")
+            Interface.curr_customer = customer
+            self._customer_menu.run(Interface.curr_customer)
 
     def find_cust(self):
         Interface.curr_customer = super()._bank.find_customer()
-        self._customer_menu.run(Interface.curr_customer)
+        if Interface.curr_customer != None:
+            self._customer_menu.run(Interface.curr_customer)
 
 
 class CustomerMenu(Interface):
     '''Docstring'''
     def __init__(self):
         '''Docstring'''
-        select_acct = ("Select Account", self.get_curr)
-        create_acct = ("Create Account", self.create_account)
+        select_acct = ("Select Account", self.account_select)
+        create_acct = ("Create Account", self.account_create)
         back = ("Back to Main Menu", self.back)
-        exit_prgrm = ("Exit Program", exit)
+        exit_prgrm = ("Exit Program", self.quit_prgrm)
         super().__init__("Customer", [select_acct,
                                       create_acct,
                                       back,
                                       exit_prgrm])
         self._acct_menu = AcctMenu()
 
-    def get_curr(self):
+    def account_select(self):
         Interface._curr_acct = super()._bank.select_account(super().curr_customer)
-        if (Interface._curr_acct != None):
+        print(f"Curr: {Interface._curr_acct}")
+        if Interface._curr_acct != None:
             self._acct_menu.run(Interface._curr_acct)
 
-    def create_account(self):
+    def account_create(self):
         Interface._curr_acct = super()._bank.new_account(super().curr_customer)
         self._acct_menu.run(Interface._curr_acct)
 
@@ -102,8 +110,8 @@ class AcctMenu(Interface):
         withdraw = ("Withdraw", self.acct_withdraw)
         buy = ("Buy Stock", self.stock_buy)
         sell = ("Sell Stock", self.stock_sell)
-        back = ("Back to Main Menu", self.back)
-        exit_prgrm = ("Exit Program", exit)
+        back = ("Back to Customer Menu", self.back)
+        exit_prgrm = ("Exit Program", self.quit_prgrm)
         super().__init__("Account", [deposit,
                                      withdraw,
                                      buy,
@@ -112,12 +120,10 @@ class AcctMenu(Interface):
                                      exit_prgrm])
 
     def acct_depost(self):
-        amt = float(input("Please enter the amount to deposit: "))
-        super()._curr_acct.deposit(amt)
+        super()._curr_acct.deposit()
 
     def acct_withdraw(self):
-        amt = float(input("Please enter amount to withdraw: "))
-        super()._curr_acct.withdraw(amt)
+        super()._curr_acct.withdraw()
 
     def stock_buy(self):
         super()._bank.buy_stock(super()._curr_acct)
