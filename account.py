@@ -50,18 +50,16 @@ class Account:
     def show_holdings(self):
         print("\tHoldings:")
         if len(self._holdings) == 0:
-            print("None found")
+            print("\tNo Holdings")
         for holding in self._holdings.values():
-            print(f"\t\t{holding.stock}\n"
-                  f"\t\tShares: {holding.shares}\n"
-                  f"\t\tPurchase Price: ${holding.purchase_price:.2f}/share\n")
+            print(holding)
 
     def show_transactions(self):
         print("\tTransactions:")
+        if len(self.transactions) == 0:
+            print("\tNo transaction history")
         for transaction in self._transactions:
-            print(f"\t\tTimestamp: {transaction[0]}\n"
-                  f"\t\tTransaction: {transaction[1]}\n"
-                  f"\t\tPrice: {transaction[2]}\n")
+            print(transaction)
 
     def __str__(self):
         return f"\tAccount Number: {self._acct_number}\n"\
@@ -92,4 +90,31 @@ class Holding:
     def buy_shares(self, to_buy):
         self._shares += to_buy
 
-# class Transaction:
+    def __str__(self):
+        return f"\t\tStock: {self.stock}\n"\
+               f"\t\tShares: {self.shares}\n"\
+               f"\t\tPurchase Price: ${self.purchase_price:.2f}/share\n"
+    
+
+class Transaction:
+    def __init__(self, timestamp, tran_type, price):
+        self._timestamp = timestamp
+        self._tran_type = tran_type
+        self._price = price
+
+    @property
+    def timestamp(self):
+        return self._timestamp
+    
+    @property
+    def tran_type(self):
+        return self._tran_type
+    
+    @property
+    def price(self):
+        return self._price
+    
+    def __str__(self):
+        return f"\t\tTimestamp:\t{self.timestamp}\n"\
+               f"\t\tTransaction:\t{self.tran_type}\n"\
+               f"\t\tPrice:\t${self.price:.2f}\n"
