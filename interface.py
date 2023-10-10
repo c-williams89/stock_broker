@@ -4,6 +4,7 @@ import os
 from customer import Customer
 from bank import Bank
 
+
 class Interface:
     _curr_customer = None
     _bank = Bank()
@@ -49,10 +50,11 @@ class Interface:
     @property
     def curr_customer(self):
         return self._curr_customer
-    
+
     @curr_customer.setter
     def curr_customer(self, new):
         self._curr_customer = new
+
 
 class MainMenu(Interface):
     '''Docstring'''
@@ -66,7 +68,7 @@ class MainMenu(Interface):
     def get_cust_info(self):
         '''Docstring'''
         customer = super()._bank.new_customer()
-        if customer != None:
+        if customer is not None:
             super()._bank.add_customer(customer)
             os.system("clear")
             Interface.curr_customer = customer
@@ -74,7 +76,7 @@ class MainMenu(Interface):
 
     def find_cust(self):
         Interface.curr_customer = super()._bank.find_customer()
-        if Interface.curr_customer != None:
+        if Interface.curr_customer is not None:
             self._customer_menu.run(Interface.curr_customer)
 
 
@@ -93,14 +95,16 @@ class CustomerMenu(Interface):
         self._acct_menu = AcctMenu()
 
     def account_select(self):
-        Interface._curr_acct = super()._bank.select_account(super().curr_customer)
+        Interface._curr_acct = super()._bank.select_account(
+            super().curr_customer)
         print(f"Curr: {Interface._curr_acct}")
-        if Interface._curr_acct != None:
+        if Interface._curr_acct is not None:
             self._acct_menu.run(Interface._curr_acct)
 
     def account_create(self):
         Interface._curr_acct = super()._bank.new_account(super().curr_customer)
         self._acct_menu.run(Interface._curr_acct)
+
 
 class AcctMenu(Interface):
     '''Docstring'''
@@ -130,4 +134,3 @@ class AcctMenu(Interface):
 
     def stock_sell(self):
         super()._bank.sell_stock(super()._curr_acct)
-
