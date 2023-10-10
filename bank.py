@@ -29,10 +29,15 @@ class Bank:
         self._customer_list.update({new_customer.id: new_customer})
 
     def new_customer(self):
-        for i in range(3):
-            name = input("Please enter customer name: ")
-            zip_code = input("Please enter customer zip code: ")
+        name = input("Please enter customer name: ")
+        try:
+            zip_code = int(input("Please enter customer zip code: "))
+        except ValueError:
+            print("Invalid zip code")
+            return None
+        else:
             customer = Customer(name, zip_code)
+        return customer
 
     def find_customer(self):
         search = input("Please enter customer ID or name: ")
