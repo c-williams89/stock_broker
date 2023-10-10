@@ -39,7 +39,7 @@ class Bank:
             customer = Customer(name, zip_code)
         return customer
 
-    def find_customer(self):
+    def find_customer(self) -> Customer or None:
         search = input("Please enter customer ID or name: ")
         cust_matches = []
         if (search.isdigit()):
@@ -63,7 +63,7 @@ class Bank:
         selection = -1
         while selection not in range(len(cust_matches)):
             try:
-                selection = int(input("=====> "))   
+                selection = int(input("=====> "))
             except ValueError:
                 print("Invalid option")
         return cust_matches[selection]
