@@ -27,8 +27,18 @@ class Customer:
     @property
     def accts(self):
         return self._accts
+    
+    @property
+    def date_enrolled(self):
+        return self._date_enrolled
+    
+    # def print_cust(self):
+    #     print(f"Name:\t{self.name}\nID:\t{self.id}\n"\
+    #           f"Date Enrolled:\t{self.date_enrolled}\n"\
+    #           f"Accounts:\n",self._accts.keys())
 
     def __str__(self):
+        nl = '\n'
         return f"Name:\t{self._name}\nID:\t{self._id}\n"\
-               f"Date:\t{self._date_enrolled}\nAccounts:\n"\
-               f"\t{(acct for acct in self._accts.values())}"
+               f"Date Enrolled:\t{self._date_enrolled}\nAccounts:\n"\
+            #    f"\t{0xa.join(self._accts)}"

@@ -4,6 +4,7 @@ from customer import Customer
 from account import Account
 from broker import Broker
 import json
+import datetime
 
 class Bank:
     acct_unique_id = 1111
@@ -17,7 +18,6 @@ class Bank:
         for ticker_symbol, data in stock_data.items():
             stock = Broker(ticker_symbol, data["Name"], data["Starting Share Price"],
                    data["Standard Deviation (%)"], data["Average Daily Change (%)"])
-            # Bank._stock_list.append(stock)
             Bank._stock_list.update({stock.ticker: stock})
 
     @property
@@ -54,6 +54,7 @@ class Bank:
         return cust_matches[selection]
 
     def new_account(self, acct_holder: Customer):
+        # acct_holder.print_cust()
         print(acct_holder)
         acct_type = input("Please enter account type (regular or tax-free): ")
         balance = float(input("Please enter starting balance: "))
@@ -84,9 +85,21 @@ class Bank:
         if (selection not in Bank._stock_list.keys()):
             print("Invalid stock selection")
         else:
-            print(f"How many shares of {selection} would you like to purchase?")
-            shares = input("=====> ")
-            
+            stock = Bank._stock_list.get(selection)
+            print(f"How many shares of {stock.name} would you like to purchase?")
+            shares = int(input("=====> "))
+            purchase_price = shares * stock.price
+            if (acct._balance < purchase_price):
+                print("Insufficient funds")
+            else:
+                acct.withdraw(purchase_price)
+                transaction = (datetime.date.today(), "Purchase", purchase_price)
+                holding = (stock, shares, purchase_price)
+                acct._holdings.append(holding)
+                acct._transactions.append(transaction)
+        for transaction in acct._transactions:
+            print(f"Time: {transaction[0]}\nType: {transaction[1]}\nPrice: {transaction[2]}")
+
     def __str__(self):
         for customer in self._customer_list:
             return f"Name: {customer._name}\nId: {customer._id}"

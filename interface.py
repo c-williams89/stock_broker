@@ -18,7 +18,7 @@ class Interface:
     def run(self, details):
         while 1:
             print(f"{self._menu_type} Menu")
-            if (self._menu_type != "Main"):
+            if self._menu_type != "Main":
                 print(f"{self._menu_type} Details:\n{details}")
             for option in self._command_dict.items():
                 print(f"{option[0]}: {option[1][0]}")
@@ -82,7 +82,6 @@ class CustomerMenu(Interface):
     def get_curr(self):
         Interface._curr_acct = super()._bank.select_account(super().curr_customer)
         if (Interface._curr_acct != None):
-            # self._acct_menu = AcctMenu()
             self._acct_menu.run(Interface._curr_acct)
 
     def create_account(self):
@@ -100,11 +99,11 @@ class AcctMenu(Interface):
         back = ("Back to Main Menu", self.back)
         exit_prgrm = ("Exit Program", exit)
         super().__init__("Account", [deposit,
-                                             withdraw,
-                                             buy,
-                                             sell,
-                                             back,
-                                             exit_prgrm])
+                                     withdraw,
+                                     buy,
+                                     sell,
+                                     back,
+                                     exit_prgrm])
 
     def acct_depost(self):
         amt = float(input("Please enter the amount to deposit: "))
