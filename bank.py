@@ -2,12 +2,23 @@
 
 from customer import Customer
 from account import Account
+from broker import Broker
+import json
+import datetime
 
 class Bank:
     acct_unique_id = 1111
     customer_unique_id = 1
+    _stock_list = {}
     def __init__(self):
         self._customer_list = {}
+        with open('stock_data.json', 'r', encoding="utf-8") as stocks:
+            stock_data = json.load(stocks)
+
+        for ticker_symbol, data in stock_data.items():
+            stock = Broker(ticker_symbol, data["Name"], data["Starting Share Price"],
+                   data["Standard Deviation (%)"], data["Average Daily Change (%)"])
+            Bank._stock_list.update({stock.ticker: stock})
 
     @property
     def customer_list(self):
@@ -43,6 +54,7 @@ class Bank:
         return cust_matches[selection]
 
     def new_account(self, acct_holder: Customer):
+        # acct_holder.print_cust()
         print(acct_holder)
         acct_type = input("Please enter account type (regular or tax-free): ")
         balance = float(input("Please enter starting balance: "))
@@ -53,8 +65,7 @@ class Bank:
                            balance)
         Bank.acct_unique_id += 1
         acct_holder.accts.update({new_acct.acct_number: new_acct})
-        for acct in acct_holder.accts.values():
-            print(acct)
+        return new_acct
 
     def select_account(self, acct_holder: Customer):
         selection = int(input("Please enter account number: "))
@@ -65,6 +76,29 @@ class Bank:
 
     def deposit(self, acct: Account, amt: float):
         pass
+
+    def buy_stock(self, acct: Account):
+        for stock in Bank._stock_list.values():
+            print(stock)
+        print("Please enter the symbol of stock to purchase.")
+        selection = input("====> ")
+        if (selection not in Bank._stock_list.keys()):
+            print("Invalid stock selection")
+        else:
+            stock = Bank._stock_list.get(selection)
+            print(f"How many shares of {stock.name} would you like to purchase?")
+            shares = int(input("=====> "))
+            purchase_price = shares * stock.price
+            if (acct._balance < purchase_price):
+                print("Insufficient funds")
+            else:
+                acct.withdraw(purchase_price)
+                transaction = (datetime.datetime.now(),
+                               "Purchase",
+                               purchase_price)
+                acct._transactions.append(transaction)
+                holding = (stock, shares, purchase_price)
+                acct._holdings.append(holding)
 
     def __str__(self):
         for customer in self._customer_list:

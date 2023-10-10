@@ -27,7 +27,17 @@ class Customer:
     @property
     def accts(self):
         return self._accts
+    
+    @property
+    def date_enrolled(self):
+        return self._date_enrolled
+    
+    def show_accounts(self):
+        for acct in self.accts.values():
+            print(f"\tAccount Id:\t{acct.acct_number}\n"
+                  f"\tType:\t{acct.acct_type}\n"
+                  f"\tBalance:\t{acct.balance}\n")
 
     def __str__(self):
         return f"Name:\t{self._name}\nID:\t{self._id}\n"\
-               f"Date:\t{self._date_enrolled}\nAccounts:\n\t{self._accts}"
+               f"Date Enrolled:\t{self._date_enrolled}\nAccounts:\n"
