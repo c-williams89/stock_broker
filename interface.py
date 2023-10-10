@@ -100,7 +100,7 @@ class AcctMenu(Interface):
         deposit = ("Deposit", self.acct_depost)
         withdraw = ("Withdraw", self.acct_withdraw)
         buy = ("Buy Stock", self.stock_buy)
-        sell = ("Sell Stock", None)
+        sell = ("Sell Stock", self.stock_sell)
         back = ("Back to Main Menu", self.back)
         exit_prgrm = ("Exit Program", exit)
         super().__init__("Account", [deposit,
@@ -120,4 +120,7 @@ class AcctMenu(Interface):
 
     def stock_buy(self):
         super()._bank.buy_stock(super()._curr_acct)
+
+    def stock_sell(self):
+        super()._bank.sell_stock(super()._curr_acct)
 

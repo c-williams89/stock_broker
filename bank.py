@@ -5,6 +5,7 @@ from account import Account
 from broker import Broker
 import json
 import datetime
+import os
 
 class Bank:
     acct_unique_id = 1111
@@ -99,6 +100,12 @@ class Bank:
                 acct._transactions.append(transaction)
                 holding = (stock, shares, purchase_price)
                 acct._holdings.append(holding)
+
+    def sell_stock(self, acct: Account):
+        os.system("clear")
+        acct.show_holdings()
+        print("Please enter symbol of stock to sell.")
+        selection = input("=====> ")
 
     def __str__(self):
         for customer in self._customer_list:

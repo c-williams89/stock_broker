@@ -50,6 +50,8 @@ class Account:
 
     def show_holdings(self):
         print("\tHoldings:")
+        if len(self._holdings) == 0:
+            print("None found")
         for holding in self._holdings:
             print(f"\t\t{holding[0]}\n"
                   f"\t\tShares: {holding[1]}\n"\
