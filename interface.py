@@ -9,8 +9,6 @@ class Interface:
     _bank = Bank()
     _curr_acct = None
 
-    back = ("Back to Main Menu", None)
-
     def __init__(self, menu_type, command_list):
         self._menu_type = menu_type
         self._command_dict = dict(enumerate(command_list, 1))
@@ -35,20 +33,17 @@ class Interface:
                 func = self._command_dict.get(selection, None)
                 if func is None:
                     print("Invalid Menu Option")
+                elif func[1].__name__ == "back":
+                    os.system("clear")
+                    break
                 else:
                     func[1]()
-                # func = self._command_dict.get(selection, self._command_dict.get(0))[1]
-            # selection = int(input("=====> "))
-            # os.system("clear")
-            # func = self._command_dict.get(selection, self._command_dict.get(0))[1]
-            # if func.__name__ == "back":
-            #     os.system("clear")
-            #     break
-            # else:
-            #     func()
 
     def back(self):
         pass
+
+    def quit_prgrm(self):
+        exit()
 
     @property
     def curr_customer(self):
@@ -64,7 +59,7 @@ class MainMenu(Interface):
         self._customer_menu = CustomerMenu()
         new_cust = ("Create New Customer", self.get_cust_info)
         find_cust = ("Find Customer", self.find_cust)
-        exit_prgrm = ("Exit Program", exit)
+        exit_prgrm = ("Exit Program", self.quit_prgrm)
         super().__init__("Main", [new_cust, find_cust, exit_prgrm])
 
     def get_cust_info(self):
@@ -89,7 +84,7 @@ class CustomerMenu(Interface):
         select_acct = ("Select Account", self.get_curr)
         create_acct = ("Create Account", self.create_account)
         back = ("Back to Main Menu", self.back)
-        exit_prgrm = ("Exit Program", exit)
+        exit_prgrm = ("Exit Program", self.quit_prgrm)
         super().__init__("Customer", [select_acct,
                                       create_acct,
                                       back,
@@ -98,7 +93,7 @@ class CustomerMenu(Interface):
 
     def get_curr(self):
         Interface._curr_acct = super()._bank.select_account(super().curr_customer)
-        if (Interface._curr_acct != None):
+        if Interface._curr_acct != None:
             self._acct_menu.run(Interface._curr_acct)
 
     def create_account(self):
@@ -113,8 +108,8 @@ class AcctMenu(Interface):
         withdraw = ("Withdraw", self.acct_withdraw)
         buy = ("Buy Stock", self.stock_buy)
         sell = ("Sell Stock", self.stock_sell)
-        back = ("Back to Main Menu", self.back)
-        exit_prgrm = ("Exit Program", exit)
+        back = ("Back to Customer Menu", self.back)
+        exit_prgrm = ("Exit Program", self.quit_prgrm)
         super().__init__("Account", [deposit,
                                      withdraw,
                                      buy,
