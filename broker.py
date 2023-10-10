@@ -2,8 +2,9 @@
 from typing import List, Tuple
 from random import gauss
 import json
+import decimal
 
-class Broker:
+class Stock:
     def __init__(self, ticker, name, start_price, std_dev, av_vol):
         self._ticker = ticker
         self._name = name
@@ -21,6 +22,7 @@ class Broker:
     
     @property
     def price(self):
+        # self.increment_price()
         return self._price[-1]
     
     @property
@@ -30,6 +32,8 @@ class Broker:
     def increment_price(self):
         price_change = gauss(self._volatility[0], self._volatility[1])
         new_price = self._price[-1] + price_change
+        new_price = int(new_price * 100)
+        new_price = float(new_price / 100)
         self._price.append(new_price)
 
     def __str__(self) -> str:

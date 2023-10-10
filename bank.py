@@ -5,7 +5,7 @@ import datetime
 import os
 from customer import Customer
 from account import Account, Holding, Transaction
-from broker import Broker
+from broker import Stock
 
 class Bank:
     acct_unique_id = 1111
@@ -17,7 +17,7 @@ class Bank:
             stock_data = json.load(stocks)
 
         for ticker_symbol, data in stock_data.items():
-            stock = Broker(ticker_symbol, data["Name"], data["Starting Share Price"],
+            stock = Stock(ticker_symbol, data["Name"], data["Starting Share Price"],
                    data["Standard Deviation (%)"], data["Average Daily Change (%)"])
             Bank._stock_list.update({stock.ticker: stock})
 
@@ -79,6 +79,7 @@ class Bank:
 
     def buy_stock(self, acct: Account):
         for stock in Bank._stock_list.values():
+            stock.increment_price()
             print(stock)
         print(f"Current Account Balance: ${acct.balance:.2f}")
         print("Please enter the symbol of stock to purchase.")
