@@ -71,7 +71,14 @@ class Bank:
     def new_account(self, acct_holder: Customer):
         print(acct_holder)
         acct_type = input("Please enter account type (regular or tax-free): ")
-        balance = float(input("Please enter starting balance: "))
+        balance = -1
+        while balance < 0:
+            try:
+                balance = float(input("Please enter starting balance: "))
+                if balance < 0:
+                    print("Starting balance must be a non-negative value.")
+            except ValueError:
+                print("Balance must be monetary value (xxx.xx)")
         new_acct = Account(acct_holder.name,
                            acct_holder.id,
                            acct_type,
@@ -82,7 +89,11 @@ class Bank:
         return new_acct
 
     def select_account(self, acct_holder: Customer):
-        selection = int(input("Please enter account number: "))
+        try:
+            selection = int(input("Please enter account number: "))
+        except ValueError:
+            print("Account ID must be a number")
+            return None
         acct = acct_holder.accts.get(selection)
         if acct is None:
             print(f"Account {selection} does not exist")

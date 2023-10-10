@@ -30,6 +30,7 @@ class Interface:
             except ValueError:
                 print("Invalid option selected")
             else:
+                os.system("clear")
                 func = self._command_dict.get(selection, None)
                 if func is None:
                     print("Invalid Menu Option")
@@ -81,8 +82,8 @@ class CustomerMenu(Interface):
     '''Docstring'''
     def __init__(self):
         '''Docstring'''
-        select_acct = ("Select Account", self.get_curr)
-        create_acct = ("Create Account", self.create_account)
+        select_acct = ("Select Account", self.account_select)
+        create_acct = ("Create Account", self.account_create)
         back = ("Back to Main Menu", self.back)
         exit_prgrm = ("Exit Program", self.quit_prgrm)
         super().__init__("Customer", [select_acct,
@@ -91,13 +92,13 @@ class CustomerMenu(Interface):
                                       exit_prgrm])
         self._acct_menu = AcctMenu()
 
-    def get_curr(self):
+    def account_select(self):
         Interface._curr_acct = super()._bank.select_account(super().curr_customer)
         print(f"Curr: {Interface._curr_acct}")
         if Interface._curr_acct != None:
             self._acct_menu.run(Interface._curr_acct)
 
-    def create_account(self):
+    def account_create(self):
         Interface._curr_acct = super()._bank.new_account(super().curr_customer)
         self._acct_menu.run(Interface._curr_acct)
 
