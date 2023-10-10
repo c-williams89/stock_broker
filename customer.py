@@ -2,8 +2,10 @@
 
 import datetime
 
+
 class Customer:
     unique_id = 1
+
     def __init__(self, name, zipcode):
         self._name = name
         self._id = self.unique_id
@@ -27,11 +29,11 @@ class Customer:
     @property
     def accts(self):
         return self._accts
-    
+
     @property
     def date_enrolled(self):
         return self._date_enrolled
-    
+
     def show_accounts(self):
         for acct in self.accts.values():
             print(f"\tAccount Id:\t{acct.acct_number}\n"
