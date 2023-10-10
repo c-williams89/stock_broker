@@ -1,11 +1,11 @@
 #!usr/bin/env python3
 
-from customer import Customer
-from account import Account
-from broker import Broker
 import json
 import datetime
 import os
+from customer import Customer
+from account import Account
+from broker import Broker
 
 class Bank:
     acct_unique_id = 1111
@@ -99,13 +99,16 @@ class Bank:
                                purchase_price)
                 acct._transactions.append(transaction)
                 holding = (stock, shares, purchase_price)
-                acct._holdings.append(holding)
+                # acct._holdings.append(holding)
+                acct.holdings.update({selection : holding})
 
     def sell_stock(self, acct: Account):
         os.system("clear")
         acct.show_holdings()
         print("Please enter symbol of stock to sell.")
         selection = input("=====> ")
+        if selection not in acct.holdings.keys():
+            print("Not found")
 
     def __str__(self):
         for customer in self._customer_list:

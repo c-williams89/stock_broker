@@ -9,9 +9,10 @@ class Account:
         self._balance = balance
         self._acct_number = acct_number
         '''3-tuple: (stock, shares, purchase price)'''
-        self._holdings = []
+        # self._holdings = [] # Consider making holdings a dictionary
+        self._holdings = {}
         '''3-tuple: (Timestamp, purchase/sale, price)'''
-        self._transactions = [] 
+        self._transactions = []
 
     @property
     def owner_name(self):
@@ -52,7 +53,7 @@ class Account:
         print("\tHoldings:")
         if len(self._holdings) == 0:
             print("None found")
-        for holding in self._holdings:
+        for holding in self._holdings.values():
             print(f"\t\t{holding[0]}\n"
                   f"\t\tShares: {holding[1]}\n"\
                   f"\t\tPurchase Price: {holding[2]}\n")
