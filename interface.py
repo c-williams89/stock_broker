@@ -70,13 +70,6 @@ class MainMenu(Interface):
             os.system("clear")
             Interface.curr_customer = customer
             self._customer_menu.run(Interface.curr_customer)
-        # name = input("Please enter customer name: ")
-        # zip_code = input("Please enter customer zip code: ")
-        # customer = Customer(name, zip_code)
-        # super()._bank.add_customer(customer)
-        # os.system("clear")
-        # Interface.curr_customer = customer
-        # self._customer_menu.run(Interface.curr_customer)
 
     def find_cust(self):
         Interface.curr_customer = super()._bank.find_customer()

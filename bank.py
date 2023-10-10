@@ -50,13 +50,22 @@ class Bank:
         else:
             for cust in self._customer_list.values():
                 if (cust.name.find(search) != -1):
+                    print("Found a match")
                     cust_matches.append(cust)
+            if len(cust_matches) == 0:
+                print(f"No matches found for '{search}'")
+                return None
             if len(cust_matches) == 1:
                 return cust_matches[0]
         print("Please select one of the matching customers:")
         for idx, cust in enumerate(cust_matches):
             print(f"{idx}: {cust.name}")
-        selection = int(input("====> "))
+        selection = -1
+        while selection not in range(len(cust_matches)):
+            try:
+                selection = int(input("=====> "))   
+            except ValueError:
+                print("Invalid option")
         return cust_matches[selection]
 
     def new_account(self, acct_holder: Customer):
