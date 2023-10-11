@@ -8,7 +8,6 @@ class TestCustomer(unittest.TestCase):
         self._cust = Customer("Test Person", 12345)
     
     def test_fields(self):
-        # cust = Customer("Test Person", 12345)
         self.assertEqual(self._cust.name, "Test Person")
         self.assertEqual(self._cust.id, 1)
         self.assertEqual(self._cust.zipcode, 12345)

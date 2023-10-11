@@ -7,7 +7,6 @@ from customer import Customer
 from account import Account, Holding, Transaction
 from broker import Stock
 
-
 class Bank:
     acct_unique_id = 1111
     customer_unique_id = 1
@@ -166,7 +165,6 @@ class Bank:
                 holding.sell_shares(shares)
                 revenue = holding.stock.price * shares
                 acct.balance = revenue
-                # acct.deposit(revenue)
                 dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 transaction = Transaction(dt,
                                           "Sell",
