@@ -77,24 +77,13 @@ class Bank:
     def new_account(self, acct_holder: Customer):
         print(acct_holder)
         acct_type = input("Please enter account type (regular or tax-free): ")
-
-        while 1:
-            try:
-                balance = float(input("Please enter starting balance: "))
-                if balance < 0:
-                    print("Starting balance must be a non-negative value.")
-                else:
-                    break
-            except ValueError:
-                print("Balance must be monetary value (xxx.xx)")
         label = input("Please enter label for account (optional): ")
         os.system("clear")
         new_acct = Account(acct_holder.name,
                            acct_holder.id,
                            acct_type,
                            Bank.acct_unique_id,
-                           label,
-                           balance)
+                           label)
         Bank.acct_unique_id += 1
         acct_holder.accts.update({new_acct.acct_number: new_acct})
         return new_acct
@@ -110,9 +99,6 @@ class Bank:
             print(f"Account {selection} does not exist")
         return acct
 
-    def deposit(self, acct: Account, amt: float):
-        pass
-
     def buy_stock(self, acct: Account):
         for stock in Bank._stock_list.values():
             stock.increment_price()
@@ -126,16 +112,17 @@ class Bank:
             stock = Bank._stock_list[selection]
             print(f"How many shares of {stock.name} "
                   f"would you like to purchase?")
-            shares = 0
-            while shares < 1:
+            while 1:
                 try:
                     shares = int(input("=====> "))
                     if shares < 1:
                         print("Stock purchases must be in positive integers.")
+                    else:
+                        break
                 except ValueError:
                     print("Stock purchases must be in whole numbers.")
             purchase_price = shares * stock.price
-            if acct._balance < purchase_price:
+            if acct.balance < purchase_price:
                 print("Insufficient funds")
             else:
                 acct.balance = -purchase_price
@@ -144,11 +131,15 @@ class Bank:
                 os.system("clear")
                 transaction = Transaction(dt,
                                           "Purchase",
-                                          purchase_price,
+                                          int(purchase_price * 100),
                                           memo)
-                acct._transactions.append(transaction)
-                holding = Holding(stock, shares, stock.price)
-                acct.holdings.update({selection: holding})
+                acct.transactions.append(transaction)
+                holding = Holding(stock, shares, int(stock.price * 100))
+                tmp = acct.holdings.get(selection)
+                if tmp is not None:
+                    tmp.buy_shares(shares)
+                else:
+                    acct.holdings.update({selection: holding})
 
     def sell_stock(self, acct: Account):
         os.system("clear")
@@ -180,7 +171,7 @@ class Bank:
                 os.system("clear")
                 transaction = Transaction(dt,
                                           "Sell",
-                                          revenue,
+                                          int(revenue * 100),
                                           memo)
                 acct.transactions.append(transaction)
                 if holding.shares == 0:
