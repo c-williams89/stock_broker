@@ -3,14 +3,16 @@
 import json
 import datetime
 import os
+from typing import Dict, Union
 from customer import Customer
 from account import Account, Holding, Transaction
 from broker import Stock
 
+
 class Bank:
     acct_unique_id = 1111
     customer_unique_id = 1
-    _stock_list = {}
+    _stock_list: Dict[str, Stock] = {}
 
     def __init__(self):
         self._customer_list = {}
@@ -43,7 +45,7 @@ class Bank:
             customer = Customer(name, zip_code)
         return customer
 
-    def find_customer(self) -> Customer or None:
+    def find_customer(self) -> Union[Customer, None]:
         search = input("Please enter customer ID or name: ")
         cust_matches = []
         if (search.isdigit()):
@@ -75,7 +77,7 @@ class Bank:
     def new_account(self, acct_holder: Customer):
         print(acct_holder)
         acct_type = input("Please enter account type (regular or tax-free): ")
-        balance = -1
+        balance = -1.0
         while balance < 0:
             try:
                 balance = float(input("Please enter starting balance: "))
@@ -116,7 +118,7 @@ class Bank:
         if (selection not in Bank._stock_list.keys()):
             print("Invalid stock selection")
         else:
-            stock = Bank._stock_list.get(selection)
+            stock = Bank._stock_list[selection]
             print(f"How many shares of {stock.name} "
                   f"would you like to purchase?")
             shares = 0
