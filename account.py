@@ -1,6 +1,7 @@
 #!usr/bin/env
 '''Module for Account class'''
 from typing import Dict, List
+import datetime
 
 
 class Account:
@@ -79,6 +80,9 @@ class Account:
         negative amount, based on whether sold at a loss or not.'''
         amt = self.get_amt("deposit")
         self._balance += int(amt * 100)
+        dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        transaction = Transaction(dt, "Deposit", int(amt * 100), "")
+        self.transactions.append(transaction)
         print(f"Successfully deposited ${amt:.2f}")
         input("Press any key to continue.")
 
@@ -91,6 +95,9 @@ class Account:
             input("Press any key to continue.")
         else:
             self._balance -= int(amt * 100)
+            dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            transaction = Transaction(dt, "Deposit", int(amt * 100), "")
+            self.transactions.append(transaction)
             print(f"Succesfully withdrew ${amt:.2f}")
             input("Press anky key to continue.")
 
