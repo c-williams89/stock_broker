@@ -18,7 +18,7 @@ class Interface:
     def run(self, details):
         '''Controlling method to display menu and handle options'''
         while 1:
-            print(f"{self._menu_type} Menu")
+            print(f"{self._menu_type} Menu\n")
             if self._menu_type != "Main":
                 print(f"{self._menu_type} Details:\n{details}")
                 if self._menu_type == "Customer":
@@ -42,6 +42,7 @@ class Interface:
                     break
                 else:
                     func[1]()
+                    os.system("clear")
 
     def back(self):
         '''Method reference for sub-classes to control back-to option'''
@@ -105,7 +106,7 @@ class CustomerMenu(Interface):
         Interface._curr_acct = super()._bank.select_account(
             super().curr_customer)
         if Interface._curr_acct is not None:
-            print(f"Curr: {Interface._curr_acct}")
+            os.system("clear")
             self._acct_menu.run(Interface._curr_acct)
 
     def account_create(self):

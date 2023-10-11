@@ -79,6 +79,8 @@ class Account:
         negative amount, based on whether sold at a loss or not.'''
         amt = self.get_amt("deposit")
         self._balance += int(amt * 100)
+        print(f"Successfully deposited ${amt:.2f}")
+        input("Press any key to continue.")
 
     def withdraw(self):
         '''Deduct from account balance. Used when withdrawing or purchasing
@@ -86,8 +88,11 @@ class Account:
         amt = self.get_amt("withdraw")
         if amt > self.balance:
             print("Sorry, you do not have over-draft protection.")
+            input("Press any key to continue.")
         else:
             self._balance -= int(amt * 100)
+            print(f"Succesfully withdrew ${amt:.2f}")
+            input("Press anky key to continue.")
 
     def get_amt(self, tran_type):
         '''Helper function to get amount to deposit/withdraw'''

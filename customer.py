@@ -6,15 +6,13 @@ from typing import Dict
 
 class Customer:
     '''Customer class'''
-    unique_id = 1
 
-    def __init__(self, name: str, zipcode: int) -> None:
+    def __init__(self, name: str, zipcode: int, unique_id: int) -> None:
         self._name = name
-        self._id = self.unique_id
         self._zipcode = zipcode
         self._date_enrolled = datetime.date.today()
         self._accts: Dict = {}
-        Customer.unique_id += 1
+        self._id = unique_id
 
     @property
     def name(self):

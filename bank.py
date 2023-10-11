@@ -12,8 +12,8 @@ from broker import Stock
 class Bank:
     '''Bank class. Controls unique ids of customers and accounts, customer
     list, and list of stock objects'''
-    acct_unique_id = 1111
-    customer_unique_id = 1
+    _acct_unique_id = 1111
+    _customer_unique_id = 1
     _stock_list: Dict[str, Stock] = {}
 
     def __init__(self):
@@ -47,7 +47,8 @@ class Bank:
                 break
             except ValueError:
                 print("Invalid zip code")
-        customer = Customer(name, zip_code)
+        customer = Customer(name, zip_code, Bank._customer_unique_id)
+        Bank._customer_unique_id += 1
         return customer
 
     def find_customer(self) -> Union[Customer, None]:
@@ -94,9 +95,9 @@ class Bank:
         new_acct = Account(acct_holder.name,
                            acct_holder.id,
                            acct_type,
-                           Bank.acct_unique_id,
+                           Bank._acct_unique_id,
                            label)
-        Bank.acct_unique_id += 1
+        Bank._acct_unique_id += 1
         acct_holder.accts.update({new_acct.acct_number: new_acct})
         return new_acct
 
@@ -104,18 +105,21 @@ class Bank:
         '''Search current customer account dictionary and return account
         object if found, else None.
         '''
-        try:
-            selection = int(input("Please enter account number: "))
-        except ValueError:
-            print("Account ID must be a number")
-            return None
+        while 1:
+            try:
+                selection = int(input("Please enter account number: "))
+                break
+            except ValueError:
+                print("Account ID must be a number.")
         acct = acct_holder.accts.get(selection)
         if acct is None:
             print(f"Account {selection} does not exist")
+            input("Press any key to continue.")
         return acct
 
-    def buy_stock(self, acct: Account) -> None:
+    def buy_stock(self, acct: Account):
         '''Allows user to purchase stocks from the list of available.'''
+
         for stock in Bank._stock_list.values():
             stock.increment_price()
             print(stock)
@@ -128,18 +132,11 @@ class Bank:
             stock = Bank._stock_list[selection]
             print(f"How many shares of {stock.name} "
                   f"would you like to purchase?")
-            while 1:
-                try:
-                    shares = int(input("=====> "))
-                    if shares < 1:
-                        print("Stock purchases must be in positive integers.")
-                    else:
-                        break
-                except ValueError:
-                    print("Stock purchases must be in whole numbers.")
+            shares = self.get_shares()
             purchase_price = shares * stock.price
             if acct.balance < purchase_price:
-                print("Insufficient funds")
+                print("Insufficient funds for purchase.")
+                return input("Press any key to continue")
             else:
                 acct.balance = -(int(purchase_price * 100))
                 dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -156,9 +153,15 @@ class Bank:
                     tmp.buy_shares(shares)
                 else:
                     acct.holdings.update({selection: holding})
+                    print(f"Sucessfully purchased {shares} shares of "
+                          f"{stock.name}")
+                    input("Press any key to continue.")
 
-    def sell_stock(self, acct: Account) -> None:
+    def sell_stock(self, acct: Account):
         '''Allows user to sell stocks from their holdings.'''
+        if len(acct.holdings) == 0:
+            print("No current holdings to sell.")
+            return input("Press any key to continue")
         os.system("clear")
         acct.show_holdings()
         print("Please enter symbol of stock to sell.")
@@ -168,15 +171,7 @@ class Bank:
             print("Not found")
         else:
             print("How many shares would you like to sell?")
-            shares = 0
-            while shares < 1:
-                try:
-                    shares = int(input("=====> "))
-                    if shares < 1:
-                        print("Stock sales must be in positive integers")
-                except ValueError:
-                    print("Stock sales must be in whole numbers.")
-
+            shares = self.get_shares()
             if shares > holding.shares:
                 print("Too many shares.")
             else:
@@ -193,6 +188,17 @@ class Bank:
                 acct.transactions.append(transaction)
                 if holding.shares == 0:
                     acct.holdings.pop(holding.stock.ticker)
+
+    def get_shares(self):
+        while 1:
+            try:
+                shares = int(input("=====> "))
+                if shares < 1:
+                    print("Stock purchases must be in positive integers.")
+                else:
+                    return shares
+            except ValueError:
+                print("Stock purchases must be in whole numbers.")
 
     def __str__(self):
         for customer in self._customer_list:
