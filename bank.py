@@ -77,12 +77,14 @@ class Bank:
     def new_account(self, acct_holder: Customer):
         print(acct_holder)
         acct_type = input("Please enter account type (regular or tax-free): ")
-        balance = -1.0
-        while balance < 0:
+
+        while 1:
             try:
                 balance = float(input("Please enter starting balance: "))
                 if balance < 0:
                     print("Starting balance must be a non-negative value.")
+                else:
+                    break
             except ValueError:
                 print("Balance must be monetary value (xxx.xx)")
         new_acct = Account(acct_holder.name,

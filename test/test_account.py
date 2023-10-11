@@ -46,6 +46,10 @@ class TestAccount(unittest.TestCase):
             self._acct.withdraw()
         self.assertEqual(self._acct.balance, 50)
 
+        with mock_input("100"):
+            self._acct.withdraw()
+        self.assertEqual(self._acct.balance, 50)
+    
     def tearDown(self) -> None:
         Customer.unique_id = 1
 
