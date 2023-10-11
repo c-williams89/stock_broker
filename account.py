@@ -2,16 +2,15 @@
 
 class Account:
 
-    def __init__(self, name, id, acct_type, acct_number, balance=0.00):
+    def __init__(self, name, id, acct_type, acct_number, label, balance=0.00):
         self._owner_name = name
         self._owner_id = id
         self._acct_type = acct_type
         self._balance = balance
         self._acct_number = acct_number
-        '''3-tuple: (stock, shares, purchase price)'''
         self._holdings = {}
-        '''3-tuple: (Timestamp, purchase/sale, price)'''
         self._transactions = []
+        self._label = label
 
     @property
     def owner_name(self):
@@ -45,6 +44,10 @@ class Account:
     @property
     def transactions(self):
         return self._transactions
+    
+    @property
+    def label(self):
+        return self._label
 
     def deposit(self):
         amt = self.get_amt("deposit")
@@ -84,9 +87,10 @@ class Account:
             print(transaction)
 
     def __str__(self):
-        return f"\tAccount Number: {self._acct_number}\n"\
-               f"\tAccount Type: {self._acct_type}\n"\
-               f"\tBalance: ${self._balance:.2f}\n"
+        return f"\tAccount Number:\t{self.acct_number}\n"\
+               f"\tAccount Type:\t{self.acct_type}\n"\
+               f"\tBalance:\t${self.balance:.2f}\n"\
+               f"\tLabel:\t\t{self.label}"
 
 
 class Holding:

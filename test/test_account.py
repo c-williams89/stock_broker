@@ -20,7 +20,8 @@ class TestAccount(unittest.TestCase):
         self._acct = Account(self._cust.name,
                              self._cust.id,
                              "Regular",
-                             1111)
+                             1111,
+                             "Retirement")
         
     def test_acct_attributes(self):
         self.assertEqual(self._acct.owner_name, self._cust.name)
@@ -59,7 +60,8 @@ class TestHolding(unittest.TestCase):
         self._acct = Account(self._cust.name,
                                 self._cust.id,
                                 "Regular",
-                                1111)
+                                1111,
+                                "Retirement")
         self._bank = Bank()
         self._stock = self._bank._stock_list.get("MMM")
         self._holding = Holding(self._stock, 1, 2140)

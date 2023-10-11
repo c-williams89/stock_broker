@@ -87,10 +87,12 @@ class Bank:
                     break
             except ValueError:
                 print("Balance must be monetary value (xxx.xx)")
+        label = input("Please enter label for account (optional): ")
         new_acct = Account(acct_holder.name,
                            acct_holder.id,
                            acct_type,
                            Bank.acct_unique_id,
+                           label,
                            balance)
         Bank.acct_unique_id += 1
         acct_holder.accts.update({new_acct.acct_number: new_acct})
