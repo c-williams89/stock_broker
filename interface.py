@@ -1,22 +1,24 @@
 #!usr/bin/env python3
-
+'''Module for Interface base class and menu sub-classes'''
 import os
-from customer import Customer
 from bank import Bank
+from typing import List
 
 
 class Interface:
+    '''Interface Base Class'''
     _curr_customer = None
     _bank = Bank()
     _curr_acct = None
 
-    def __init__(self, menu_type, command_list):
+    def __init__(self, menu_type: str, command_list: List) -> None:
         self._menu_type = menu_type
         self._command_dict = dict(enumerate(command_list, 1))
 
     def run(self, details):
+        '''Controlling method to display menu and handle options'''
         while 1:
-            print(f"{self._menu_type} Menu")
+            print(f"{self._menu_type} Menu\n")
             if self._menu_type != "Main":
                 print(f"{self._menu_type} Details:\n{details}")
                 if self._menu_type == "Customer":
@@ -40,15 +42,19 @@ class Interface:
                     break
                 else:
                     func[1]()
+                    os.system("clear")
 
     def back(self):
+        '''Method reference for sub-classes to control back-to option'''
         pass
 
     def quit_prgrm(self):
+        '''Exits program'''
         exit()
 
     @property
     def curr_customer(self):
+        '''Returns current customer being accessed'''
         return self._curr_customer
 
     @curr_customer.setter
@@ -57,7 +63,7 @@ class Interface:
 
 
 class MainMenu(Interface):
-    '''Docstring'''
+    '''Class for Main Menu'''
     def __init__(self):
         self._customer_menu = CustomerMenu()
         new_cust = ("Create New Customer", self.get_cust_info)
@@ -66,24 +72,25 @@ class MainMenu(Interface):
         super().__init__("Main", [new_cust, find_cust, exit_prgrm])
 
     def get_cust_info(self):
-        '''Docstring'''
+        '''Gets customer informmation for new customer and adds to bank's
+        customer list'''
         customer = super()._bank.new_customer()
-        if customer is not None:
-            super()._bank.add_customer(customer)
-            os.system("clear")
-            Interface.curr_customer = customer
-            self._customer_menu.run(Interface.curr_customer)
+        super()._bank.add_customer(customer)
+        os.system("clear")
+        Interface.curr_customer = customer
+        self._customer_menu.run(Interface.curr_customer)
 
     def find_cust(self):
+        '''Finds customer in bank customer list if they exist and calls
+        customer menu with selected customer'''
         Interface.curr_customer = super()._bank.find_customer()
         if Interface.curr_customer is not None:
             self._customer_menu.run(Interface.curr_customer)
 
 
 class CustomerMenu(Interface):
-    '''Docstring'''
+    '''Class for Customer Menu'''
     def __init__(self):
-        '''Docstring'''
         select_acct = ("Select Account", self.account_select)
         create_acct = ("Create Account", self.account_create)
         back = ("Back to Main Menu", self.back)
@@ -95,21 +102,22 @@ class CustomerMenu(Interface):
         self._acct_menu = AcctMenu()
 
     def account_select(self):
+        '''Select account from current customer's account list'''
         Interface._curr_acct = super()._bank.select_account(
             super().curr_customer)
-        print(f"Curr: {Interface._curr_acct}")
         if Interface._curr_acct is not None:
+            os.system("clear")
             self._acct_menu.run(Interface._curr_acct)
 
     def account_create(self):
+        '''Create a new account for current customer'''
         Interface._curr_acct = super()._bank.new_account(super().curr_customer)
         self._acct_menu.run(Interface._curr_acct)
 
 
 class AcctMenu(Interface):
-    '''Docstring'''
+    '''Class for Account Menu'''
     def __init__(self):
-        '''Docstring'''
         deposit = ("Deposit", self.acct_depost)
         withdraw = ("Withdraw", self.acct_withdraw)
         buy = ("Buy Stock", self.stock_buy)
@@ -124,13 +132,17 @@ class AcctMenu(Interface):
                                      exit_prgrm])
 
     def acct_depost(self):
+        '''Deposit funds'''
         super()._curr_acct.deposit()
 
     def acct_withdraw(self):
+        '''Withdraw funds'''
         super()._curr_acct.withdraw()
 
     def stock_buy(self):
+        '''Purchase stocks'''
         super()._bank.buy_stock(super()._curr_acct)
 
     def stock_sell(self):
+        '''Sell stocks'''
         super()._bank.sell_stock(super()._curr_acct)
