@@ -1,5 +1,5 @@
 #!usr/bin/env python3
-
+'''Bank module'''
 import json
 import datetime
 import os
@@ -10,6 +10,8 @@ from broker import Stock
 
 
 class Bank:
+    '''Bank class. Controls unique ids of customers and accounts, customer
+    list, and list of stock objects'''
     acct_unique_id = 1111
     customer_unique_id = 1
     _stock_list: Dict[str, Stock] = {}
@@ -29,23 +31,30 @@ class Bank:
 
     @property
     def customer_list(self):
+        '''Return customer list'''
         return self._customer_list
 
     def add_customer(self, new_customer: Customer):
+        '''Add new customer object to dictionary of customers'''
         self._customer_list.update({new_customer.id: new_customer})
 
     def new_customer(self):
+        '''Get user input and create customer object'''
         name = input("Please enter customer name: ")
-        try:
-            zip_code = int(input("Please enter customer zip code: "))
-        except ValueError:
-            print("Invalid zip code")
-            return None
-        else:
-            customer = Customer(name, zip_code)
+        while 1:
+            try:
+                zip_code = int(input("Please enter customer zip code: "))
+                break
+            except ValueError:
+                print("Invalid zip code")
+        customer = Customer(name, zip_code)
         return customer
 
     def find_customer(self) -> Union[Customer, None]:
+        '''Search customer dictionary for exact match on ID and return, list of
+        objects with partial name match, or None if no matching customers
+        found
+        '''
         search = input("Please enter customer ID or name: ")
         cust_matches = []
         if (search.isdigit()):
@@ -74,7 +83,10 @@ class Bank:
                 print("Invalid option")
         return cust_matches[selection]
 
-    def new_account(self, acct_holder: Customer):
+    def new_account(self, acct_holder: Customer) -> Account:
+        '''Get user input, create account object, and add to current customer
+        dictionary of accounts
+        '''
         print(acct_holder)
         acct_type = input("Please enter account type (regular or tax-free): ")
         label = input("Please enter label for account (optional): ")
@@ -89,6 +101,9 @@ class Bank:
         return new_acct
 
     def select_account(self, acct_holder: Customer):
+        '''Search current customer account dictionary and return account
+        object if found, else None.
+        '''
         try:
             selection = int(input("Please enter account number: "))
         except ValueError:
@@ -99,7 +114,8 @@ class Bank:
             print(f"Account {selection} does not exist")
         return acct
 
-    def buy_stock(self, acct: Account):
+    def buy_stock(self, acct: Account) -> None:
+        '''Allows user to purchase stocks from the list of available.'''
         for stock in Bank._stock_list.values():
             stock.increment_price()
             print(stock)
@@ -125,7 +141,7 @@ class Bank:
             if acct.balance < purchase_price:
                 print("Insufficient funds")
             else:
-                acct.balance = -purchase_price
+                acct.balance = -(int(purchase_price * 100))
                 dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 memo = input("Optional: Enter memo for this transaction. ")
                 os.system("clear")
@@ -141,7 +157,8 @@ class Bank:
                 else:
                     acct.holdings.update({selection: holding})
 
-    def sell_stock(self, acct: Account):
+    def sell_stock(self, acct: Account) -> None:
+        '''Allows user to sell stocks from their holdings.'''
         os.system("clear")
         acct.show_holdings()
         print("Please enter symbol of stock to sell.")
@@ -165,7 +182,7 @@ class Bank:
             else:
                 holding.sell_shares(shares)
                 revenue = holding.stock.price * shares
-                acct.balance = revenue
+                acct.balance = int(revenue * 100)
                 dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 memo = input("Optional: Enter memo for this transaction. ")
                 os.system("clear")
