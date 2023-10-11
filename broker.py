@@ -37,4 +37,4 @@ class Stock:
         self._price.append(new_price)
 
     def __str__(self) -> str:
-        return f"Ticker: {self.ticker}\tCurrent Price: {self.price}"
+        return f"Ticker: {self.ticker}\tCurrent Price: ${self.price:.2f}"
