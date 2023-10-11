@@ -2,7 +2,7 @@
 
 class Account:
 
-    def __init__(self, name, id, acct_type, acct_number, label, balance=0.00):
+    def __init__(self, name, id, acct_type, acct_number, label, balance=0):
         self._owner_name = name
         self._owner_id = id
         self._acct_type = acct_type
@@ -28,7 +28,7 @@ class Account:
     @property
     def balance(self):
         '''Getter for balance'''
-        return self._balance
+        return float(self._balance)
 
     @balance.setter
     def balance(self, new):
@@ -55,18 +55,18 @@ class Account:
         self._value = self.balance
         for holding in self._holdings.values():
             self._value += holding.shares * holding.stock.price
-        return self._value
+        return float(self._value)
 
     def deposit(self):
         amt = self.get_amt("deposit")
-        self._balance += amt
+        self._balance += int(amt)
 
     def withdraw(self):
         amt = self.get_amt("withdraw")
         if amt > self.balance:
             print("Sorry, you do not have over-draft protection.")
         else:
-            self._balance -= amt
+            self._balance -= int(amt)
 
     def get_amt(self, tran_type):
         amt = -1

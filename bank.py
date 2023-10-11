@@ -77,24 +77,13 @@ class Bank:
     def new_account(self, acct_holder: Customer):
         print(acct_holder)
         acct_type = input("Please enter account type (regular or tax-free): ")
-
-        while 1:
-            try:
-                balance = float(input("Please enter starting balance: "))
-                if balance < 0:
-                    print("Starting balance must be a non-negative value.")
-                else:
-                    break
-            except ValueError:
-                print("Balance must be monetary value (xxx.xx)")
         label = input("Please enter label for account (optional): ")
         os.system("clear")
         new_acct = Account(acct_holder.name,
                            acct_holder.id,
                            acct_type,
                            Bank.acct_unique_id,
-                           label,
-                           balance)
+                           label)
         Bank.acct_unique_id += 1
         acct_holder.accts.update({new_acct.acct_number: new_acct})
         return new_acct
@@ -109,9 +98,6 @@ class Bank:
         if acct is None:
             print(f"Account {selection} does not exist")
         return acct
-
-    def deposit(self, acct: Account, amt: float):
-        pass
 
     def buy_stock(self, acct: Account):
         for stock in Bank._stock_list.values():
