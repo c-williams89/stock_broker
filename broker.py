@@ -1,8 +1,6 @@
 #!usr/bin/env python3
 from typing import List, Tuple
 from random import gauss
-import json
-import decimal
 
 
 class Stock:
