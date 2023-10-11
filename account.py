@@ -11,6 +11,7 @@ class Account:
         self._holdings = {}
         self._transactions = []
         self._label = label
+        self._value = balance
 
     @property
     def owner_name(self):
@@ -48,6 +49,13 @@ class Account:
     @property
     def label(self):
         return self._label
+    
+    @property
+    def value(self):
+        self._value = self.balance
+        for holding in self._holdings.values():
+            self._value += holding.shares * holding.stock.price
+        return self._value
 
     def deposit(self):
         amt = self.get_amt("deposit")
@@ -90,7 +98,8 @@ class Account:
         return f"\tAccount Number:\t{self.acct_number}\n"\
                f"\tAccount Type:\t{self.acct_type}\n"\
                f"\tBalance:\t${self.balance:.2f}\n"\
-               f"\tLabel:\t\t{self.label}"
+               f"\tLabel:\t\t{self.label}\n"\
+               f"\tCurrent Value:\t${self.value:.2f}\n"
 
 
 class Holding:
@@ -118,7 +127,7 @@ class Holding:
         self._shares += to_buy
 
     def __str__(self):
-        return f"\t\tStock:\t\t{self.stock}\n"\
+        return f"\t\t{self.stock}\n"\
                f"\t\tShares:\t\t{self.shares}\n"\
                f"\t\tPurchase Price:\t${self.purchase_price:.2f}/share\n"
 

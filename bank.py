@@ -88,6 +88,7 @@ class Bank:
             except ValueError:
                 print("Balance must be monetary value (xxx.xx)")
         label = input("Please enter label for account (optional): ")
+        os.system("clear")
         new_acct = Account(acct_holder.name,
                            acct_holder.id,
                            acct_type,
@@ -140,6 +141,7 @@ class Bank:
                 acct.balance = -purchase_price
                 dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 memo = input("Optional: Enter memo for this transaction. ")
+                os.system("clear")
                 transaction = Transaction(dt,
                                           "Purchase",
                                           purchase_price,
@@ -175,6 +177,7 @@ class Bank:
                 acct.balance = revenue
                 dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 memo = input("Optional: Enter memo for this transaction. ")
+                os.system("clear")
                 transaction = Transaction(dt,
                                           "Sell",
                                           revenue,
