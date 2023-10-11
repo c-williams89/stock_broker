@@ -112,16 +112,17 @@ class Bank:
             stock = Bank._stock_list[selection]
             print(f"How many shares of {stock.name} "
                   f"would you like to purchase?")
-            shares = 0
-            while shares < 1:
+            while 1:
                 try:
                     shares = int(input("=====> "))
                     if shares < 1:
                         print("Stock purchases must be in positive integers.")
+                    else:
+                        break
                 except ValueError:
                     print("Stock purchases must be in whole numbers.")
             purchase_price = shares * stock.price
-            if acct._balance < purchase_price:
+            if acct.balance < purchase_price:
                 print("Insufficient funds")
             else:
                 acct.balance = -purchase_price
@@ -130,11 +131,15 @@ class Bank:
                 os.system("clear")
                 transaction = Transaction(dt,
                                           "Purchase",
-                                          purchase_price,
+                                          int(purchase_price * 100),
                                           memo)
-                acct._transactions.append(transaction)
-                holding = Holding(stock, shares, stock.price)
-                acct.holdings.update({selection: holding})
+                acct.transactions.append(transaction)
+                holding = Holding(stock, shares, int(stock.price * 100))
+                tmp = acct.holdings.get(selection)
+                if tmp is not None:
+                    tmp.buy_shares(shares)
+                else:
+                    acct.holdings.update({selection: holding})
 
     def sell_stock(self, acct: Account):
         os.system("clear")
@@ -166,7 +171,7 @@ class Bank:
                 os.system("clear")
                 transaction = Transaction(dt,
                                           "Sell",
-                                          revenue,
+                                          int(revenue * 100),
                                           memo)
                 acct.transactions.append(transaction)
                 if holding.shares == 0:

@@ -45,11 +45,11 @@ class Account:
     @property
     def transactions(self):
         return self._transactions
-    
+
     @property
     def label(self):
         return self._label
-    
+
     @property
     def value(self):
         self._value = self.balance
@@ -118,7 +118,7 @@ class Holding:
 
     @property
     def purchase_price(self):
-        return self._purchase_price
+        return float(self._purchase_price / 100)
 
     def sell_shares(self, to_sell):
         self._shares -= to_sell
@@ -149,8 +149,8 @@ class Transaction:
 
     @property
     def price(self):
-        return self._price
-    
+        return float(self._price / 100)
+
     @property
     def memo(self):
         return self._memo
