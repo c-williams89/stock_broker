@@ -85,7 +85,7 @@ class TestHolding(unittest.TestCase):
 class TestTransaction(unittest.TestCase):
     def setUp(self) -> None:
         self._dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self._tran = Transaction(self._dt, "Purchase", 2000)
+        self._tran = Transaction(self._dt, "Purchase", 2000, "Retirement")
 
     def test_transaction_attributes(self):
         self.assertEqual(self._tran.timestamp, self._dt)

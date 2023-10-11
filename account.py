@@ -118,16 +118,17 @@ class Holding:
         self._shares += to_buy
 
     def __str__(self):
-        return f"\t\tStock: {self.stock}\n"\
-               f"\t\tShares: {self.shares}\n"\
-               f"\t\tPurchase Price: ${self.purchase_price:.2f}/share\n"
+        return f"\t\tStock:\t\t{self.stock}\n"\
+               f"\t\tShares:\t\t{self.shares}\n"\
+               f"\t\tPurchase Price:\t${self.purchase_price:.2f}/share\n"
 
 
 class Transaction:
-    def __init__(self, timestamp, tran_type, price):
+    def __init__(self, timestamp, tran_type, price, memo):
         self._timestamp = timestamp
         self._tran_type = tran_type
         self._price = price
+        self._memo = memo
 
     @property
     def timestamp(self):
@@ -140,8 +141,13 @@ class Transaction:
     @property
     def price(self):
         return self._price
+    
+    @property
+    def memo(self):
+        return self._memo
 
     def __str__(self):
         return f"\t\tTimestamp:\t{self.timestamp}\n"\
                f"\t\tTransaction:\t{self.tran_type}\n"\
-               f"\t\tPrice:\t${self.price:.2f}\n"
+               f"\t\tPrice:\t\t${self.price:.2f}\n"\
+               f"\t\tMemo:\t\t{self.memo}\n"

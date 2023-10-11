@@ -139,9 +139,11 @@ class Bank:
             else:
                 acct.balance = -purchase_price
                 dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                memo = input("Optional: Enter memo for this transaction. ")
                 transaction = Transaction(dt,
                                           "Purchase",
-                                          purchase_price)
+                                          purchase_price,
+                                          memo)
                 acct._transactions.append(transaction)
                 holding = Holding(stock, shares, stock.price)
                 acct.holdings.update({selection: holding})
@@ -172,9 +174,11 @@ class Bank:
                 revenue = holding.stock.price * shares
                 acct.balance = revenue
                 dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                memo = input("Optional: Enter memo for this transaction. ")
                 transaction = Transaction(dt,
                                           "Sell",
-                                          revenue)
+                                          revenue,
+                                          memo)
                 acct.transactions.append(transaction)
                 if holding.shares == 0:
                     acct.holdings.pop(holding.stock.ticker)
